@@ -3,359 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentordashboard CIOS — Download & Installatie</title>
+  <title>Mentordashboard — CIOS Zuidwest-Nederland</title>
   <meta name="description" content="Gratis programma voor CIOS mentoren. Altijd een helder overzicht van je leerlingen. Download voor Mac of Windows.">
 
+  <!-- Barlow Condensed: dichtst bij Industry voor web -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:        #009FE3;
-      --blue-dark:   #0077C2;
-      --blue-light:  #E0F5FD;
-      --orange:      #EA580C;
-      --orange-light:#FFF7ED;
-      --bg:          #F0F9FF;
-      --surface:     #FFFFFF;
-      --text:        #1E293B;
-      --text-sub:    #475569;
-      --text-muted:  #64748B;
-      --border:      #CBD5E1;
-      --green:       #16A34A;
-      --red:         #DC2626;
-      --radius-sm:   8px;
-      --radius:      14px;
-      --radius-lg:   20px;
-      --shadow:      0 1px 4px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
-      --shadow-lg:   0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+      --blauw:      #009FE3;
+      --blauw-dk:   #007BBF;
+      --blauw-lt:   #E0F5FD;
+      --zwart:      #0D0D0D;
+      --wit:        #FFFFFF;
+      --grijs-lt:   #F4F6F8;
+      --grijs:      #E8ECF0;
+      --tekst:      #1A1A1A;
+      --tekst-sub:  #4A5568;
+      --tekst-mute: #6B7280;
+      --groen:      #16A34A;
+      --rood:       #DC2626;
+      --oranje:     #EA580C;
+      --radius:     4px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --shadow:     0 2px 8px rgba(0,0,0,.10);
+      --shadow-lg:  0 8px 24px rgba(0,0,0,.14);
+
+      /* Industry met Barlow Condensed fallback */
+      --font-kop:   'Industry', 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      --font-body:  'Helvetica Neue', 'Barlow', Arial, sans-serif;
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--wit); color: var(--tekst); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: var(--font-kop); line-height: 1.1; letter-spacing: .01em; }
 
-    body {
-      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 18px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; line-height: 1.2; }
-
-    /* ── skip link ── */
-    .skip-link {
-      position: absolute; top: -100px; left: 1rem;
-      background: var(--blue); color: #fff;
-      padding: .5rem 1rem; border-radius: var(--radius-sm);
-      font-weight: 600; z-index: 100; transition: top .15s;
-    }
+    .skip-link { position: absolute; top: -100px; left: 1rem; background: var(--blauw); color: #fff; padding: .5rem 1rem; border-radius: var(--radius); font-weight: 700; z-index: 100; }
     .skip-link:focus { top: 1rem; }
 
-    /* ── nav ── */
+    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow);
+      background: var(--wit);
+      border-bottom: 3px solid var(--blauw);
+      box-shadow: 0 2px 12px rgba(0,0,0,.10);
     }
-    .nav-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
-      height: 64px; display: flex; align-items: center; gap: 1rem;
-    }
-    .nav-logo {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-      border-radius: 9px; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,159,227,.35);
-    }
-    .nav-logo svg { width: 20px; height: 20px; }
-    .nav-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); }
-    .nav-badge {
-      margin-left: auto; background: var(--blue-light); color: var(--blue-dark);
-      font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px;
-      border: 1px solid #BAE6FD; letter-spacing: .02em;
-    }
-    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.9rem; font-weight: 500; color: var(--text-sub); text-decoration: none;
-      padding: 0.35rem 0.75rem; border-radius: var(--radius-sm);
-      transition: color .15s, background .15s;
-    }
-    .nav-links a:hover { color: var(--text); background: var(--blue-light); }
-    .nav-links a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-    @media (max-width: 600px) { .nav-links { display: none; } }
+    .nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; height: 68px; display: flex; align-items: center; gap: 1.5rem; }
+    .nav-logo img { height: 40px; display: block; }
+    .nav-divider { width: 1px; height: 32px; background: var(--grijs); }
+    .nav-subtitle { font-family: var(--font-kop); font-weight: 700; font-size: 1rem; color: var(--tekst); letter-spacing: .02em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; margin-left: auto; }
+    .nav-links a { font-family: var(--font-kop); font-weight: 600; font-size: 0.9rem; letter-spacing: .04em; text-transform: uppercase; color: var(--tekst-sub); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: var(--radius); transition: color .15s, background .15s; }
+    .nav-links a:hover { color: var(--blauw); background: var(--blauw-lt); }
+    .nav-links a:focus-visible { outline: 2px solid var(--blauw); outline-offset: 2px; }
+    .nav-version { background: var(--blauw); color: #fff; font-family: var(--font-kop); font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; white-space: nowrap; }
+    @media (max-width: 640px) { .nav-links { display: none; } .nav-subtitle { display: none; } }
 
-    /* ── buttons ── */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1rem;
-      padding: 0.8rem 1.75rem; border-radius: var(--radius-sm); border: none;
-      cursor: pointer; text-decoration: none;
-      transition: transform .15s, box-shadow .15s, background .15s;
-      min-height: 52px; white-space: nowrap;
-    }
-    .btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    /* ── BUTTONS ── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: var(--font-kop); font-weight: 700; font-size: 1rem; letter-spacing: .04em; text-transform: uppercase; padding: 0.85rem 1.75rem; border-radius: var(--radius); border: none; cursor: pointer; text-decoration: none; transition: background .15s, transform .1s, box-shadow .15s; min-height: 52px; }
+    .btn:focus-visible { outline: 3px solid var(--wit); outline-offset: 3px; }
     .btn:active { transform: translateY(1px); }
     .btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .btn-blauw { background: var(--blauw); color: #fff; box-shadow: 0 4px 16px rgba(0,159,227,.4); }
+    .btn-blauw:hover { background: var(--blauw-dk); box-shadow: 0 6px 20px rgba(0,159,227,.5); transform: translateY(-1px); }
+    .btn-zwart { background: var(--zwart); color: #fff; }
+    .btn-zwart:hover { background: #333; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.7); }
+    .btn-outline:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+    .btn-ghost { background: transparent; color: var(--tekst-sub); border: 1.5px solid var(--grijs); }
+    .btn-ghost:hover { background: var(--grijs-lt); color: var(--tekst); }
+    .btn-lg { font-size: 1.1rem; padding: 1rem 2.25rem; min-height: 58px; }
 
-    .btn-primary { background: var(--orange); color: #fff; box-shadow: 0 4px 14px rgba(234,88,12,.35); }
-    .btn-primary:hover { background: #C2410C; box-shadow: 0 6px 20px rgba(234,88,12,.45); transform: translateY(-1px); }
-
-    .btn-secondary { background: var(--surface); color: var(--blue-dark); border: 2px solid var(--blue); }
-    .btn-secondary:hover { background: var(--blue-light); transform: translateY(-1px); }
-
-    .btn-ghost { background: transparent; color: var(--text-sub); border: 1.5px solid var(--border); }
-    .btn-ghost:hover { background: var(--surface); color: var(--text); }
-
-    .btn-lg { font-size: 1.1rem; padding: 1rem 2rem; min-height: 58px; }
-
-    /* ── layout ── */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    /* ── LAYOUT ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
     section { padding: 5rem 0; }
-    .section-label {
-      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem;
-    }
-    .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--text); margin-bottom: 1rem; }
-    .section-sub { font-size: 1.05rem; color: var(--text-sub); max-width: 560px; line-height: 1.7; }
+    .section-label { font-family: var(--font-kop); font-size: 0.8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blauw); margin-bottom: 0.6rem; }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .section-sub { font-size: 1.05rem; color: var(--tekst-sub); max-width: 560px; line-height: 1.7; }
 
-    /* ── hero ── */
-    .hero {
-      background: linear-gradient(160deg, #0C4A6E 0%, #0369A1 45%, #0EA5E9 100%);
-      padding: 6rem 0 5rem; overflow: hidden; position: relative;
-    }
+    /* ── HERO ── */
+    .hero { background: var(--zwart); position: relative; padding: 5.5rem 0 7rem; overflow: hidden; }
+    /* diagonale achtergrond rechts in CIOS blauw */
     .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      pointer-events: none;
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 55%;
+      background: var(--blauw);
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
     }
-    .hero-inner {
-      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-    }
-    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; } .hero-visual { display: none; } }
+    .hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } .hero::before { display: none; } .hero { background: var(--blauw); } }
 
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
-      color: #BAE6FD; font-size: 0.85rem; font-weight: 600;
-      padding: 0.35rem 0.85rem; border-radius: 99px; margin-bottom: 1.25rem;
-    }
-    .hero-eyebrow svg { width: 14px; height: 14px; }
-    .hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1.25rem; line-height: 1.15; }
-    .hero-sub { font-size: 1.1rem; color: #BAE6FD; line-height: 1.75; margin-bottom: 2rem; max-width: 480px; }
+    .hero-logo { margin-bottom: 2rem; }
+    .hero-logo img { height: 56px; }
+
+    .hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 1.25rem; line-height: 1.05; }
+    .hero h1 span { color: var(--blauw); display: block; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.85); line-height: 1.75; margin-bottom: 2rem; max-width: 460px; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .hero-note { margin-top: 1.25rem; font-size: 0.875rem; color: rgba(186,230,253,.75); display: flex; align-items: center; gap: 0.4rem; }
+    .hero-note { margin-top: 1.25rem; font-size: 0.85rem; color: rgba(255,255,255,.55); display: flex; align-items: center; gap: 0.4rem; }
     .hero-note svg { width: 14px; height: 14px; }
 
-    /* mockup */
+    /* mockup rechts */
     .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .mockup {
-      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-      border-radius: 16px; padding: 1.25rem; width: 100%; max-width: 380px;
-      backdrop-filter: blur(8px);
-    }
-    .mockup-bar {
-      height: 28px; background: rgba(255,255,255,.15); border-radius: 8px;
-      margin-bottom: 1rem; display: flex; align-items: center; padding: 0 0.75rem; gap: 0.4rem;
-    }
-    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .mockup-dot-r { background: #FCA5A5; }
-    .mockup-dot-y { background: #FCD34D; }
-    .mockup-dot-g { background: #86EFAC; }
-    .mockup-title { font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,.6); margin-left: 0.5rem; }
-    .mockup-cards { display: flex; flex-direction: column; gap: 0.5rem; }
-    .mockup-card {
-      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.15);
-      border-radius: 8px; padding: 0.6rem 0.85rem; display: flex; align-items: center; gap: 0.75rem;
-    }
-    .mockup-rag { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .mockup-rag-g { background: #4ADE80; }
-    .mockup-rag-o { background: #FB923C; }
-    .mockup-rag-r { background: #F87171; }
+    @media (max-width: 768px) { .hero-visual { display: none; } }
+    .mockup { background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 1.25rem; width: 100%; max-width: 360px; backdrop-filter: blur(6px); }
+    .mockup-bar { height: 26px; background: rgba(0,0,0,.3); border-radius: 6px; margin-bottom: 0.85rem; display: flex; align-items: center; padding: 0 0.75rem; gap: 0.4rem; }
+    .mockup-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .mockup-dot-r { background: #F87171; } .mockup-dot-y { background: #FCD34D; } .mockup-dot-g { background: #4ADE80; }
+    .mockup-title { font-family: var(--font-kop); font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,.5); margin-left: 0.5rem; letter-spacing: .04em; text-transform: uppercase; }
+    .mockup-cards { display: flex; flex-direction: column; gap: 0.45rem; }
+    .mockup-card { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 0.55rem 0.8rem; display: flex; align-items: center; gap: 0.7rem; }
+    .mockup-rag { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .mockup-rag-g { background: #4ADE80; } .mockup-rag-o { background: #FB923C; } .mockup-rag-r { background: #F87171; }
     .mockup-name { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,.9); flex: 1; }
-    .mockup-tag { font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 99px; }
+    .mockup-tag { font-family: var(--font-kop); font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: .04em; }
     .mockup-tag-g { background: rgba(74,222,128,.2); color: #86EFAC; }
     .mockup-tag-o { background: rgba(251,146,60,.2); color: #FCD34D; }
     .mockup-tag-r { background: rgba(248,113,113,.2); color: #FCA5A5; }
 
-    /* ── trust bar ── */
-    .trust-bar { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
-    .trust-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; }
-    .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); }
-    .trust-item svg { width: 18px; height: 18px; color: var(--green); }
+    /* ── DIAGONAAL SCHEIDINGSVLAK ── */
+    .divider-down { display: block; line-height: 0; }
+    .divider-down svg { display: block; width: 100%; }
 
-    /* ── features ── */
-    .features { background: var(--surface); }
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    /* ── TRUST BAR ── */
+    .trust-bar { background: var(--zwart); padding: 1.5rem 0; }
+    .trust-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; }
+    .trust-item { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-kop); font-size: 0.95rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+    .trust-item svg { width: 18px; height: 18px; color: var(--blauw); }
+
+    /* ── FEATURES ── */
+    .features { background: var(--grijs-lt); }
+    .features .section-title { color: var(--zwart); }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
     @media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
     @media (min-width: 769px) and (max-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr; } }
 
-    .feature-card {
-      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem;
-      transition: box-shadow .2s, transform .2s; cursor: default;
-    }
-    .feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-    .feature-icon {
-      width: 52px; height: 52px; border-radius: var(--radius-sm);
-      background: var(--blue-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
-    }
-    .feature-icon svg { width: 26px; height: 26px; color: var(--blue-dark); }
-    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .feature-card p { font-size: 0.95rem; color: var(--text-sub); line-height: 1.65; }
+    .feature-card { background: var(--wit); border-top: 4px solid var(--blauw); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 1.75rem; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s; }
+    .feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .feature-icon { width: 48px; height: 48px; background: var(--blauw); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; }
+    .feature-icon svg { width: 24px; height: 24px; color: #fff; }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; margin-bottom: 0.6rem; }
+    .feature-card p { font-size: 0.92rem; color: var(--tekst-sub); line-height: 1.65; }
 
-    /* ── download ── */
-    .download { background: var(--bg); }
+    /* ── DOWNLOAD ── */
+    .download { background: var(--wit); }
+    .download .section-title { color: var(--zwart); }
     .download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
-    @media (max-width: 900px) { .download-grid { grid-template-columns: 1fr; max-width: 460px; } }
+    @media (max-width: 900px) { .download-grid { grid-template-columns: 1fr; max-width: 440px; } }
 
-    .dl-card {
-      background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-lg);
-      padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1rem;
-      box-shadow: var(--shadow); transition: border-color .2s, box-shadow .2s, transform .2s;
-    }
-    .dl-card:hover { border-color: var(--blue); box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-    .dl-card-icon { width: 56px; height: 56px; }
+    .dl-card { background: var(--grijs-lt); border: 2px solid var(--grijs); border-radius: var(--radius-md); padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .dl-card:hover { border-color: var(--blauw); box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .dl-card-icon { width: 52px; height: 52px; }
     .dl-card-icon svg { width: 100%; height: 100%; }
-    .dl-card-platform { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
-    .dl-card h3 { font-size: 1.2rem; font-weight: 700; margin-top: 0.1rem; margin-bottom: 0.1rem; }
-    .dl-card-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.5; flex: 1; }
-    .dl-card-hint {
-      background: var(--orange-light); border: 1px solid #FED7AA; border-radius: var(--radius-sm);
-      padding: 0.6rem 0.85rem; font-size: 0.8rem; color: #9A3412; line-height: 1.5;
-    }
-    .dl-card-hint strong { color: #7C2D12; }
+    .dl-card-platform { font-family: var(--font-kop); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blauw); }
+    .dl-card h3 { font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; margin-top: 0.1rem; }
+    .dl-card-desc { font-size: 0.88rem; color: var(--tekst-sub); line-height: 1.55; flex: 1; }
+    .dl-card-hint { background: #FFF7ED; border-left: 3px solid var(--oranje); border-radius: 0 var(--radius) var(--radius) 0; padding: 0.6rem 0.85rem; font-size: 0.8rem; color: #7C2D12; line-height: 1.5; }
+    .dl-card-hint strong { color: #9A3412; }
 
-    /* ── install ── */
-    .install { background: var(--surface); }
+    /* ── INSTALL ── */
+    .install { background: var(--zwart); color: #fff; }
+    .install .section-label { color: var(--blauw); }
+    .install .section-title { color: #fff; }
+    .install .section-sub { color: rgba(255,255,255,.7); }
     .install-platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
     @media (max-width: 768px) { .install-platforms { grid-template-columns: 1fr; } }
 
-    .install-block { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
-    .install-platform-header {
-      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem;
-      padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
-    }
-    .install-platform-header svg { width: 28px; height: 28px; flex-shrink: 0; }
-    .install-platform-header h3 { font-size: 1.1rem; font-weight: 700; }
+    .install-block { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-top: 3px solid var(--blauw); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 2rem; }
+    .install-platform-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .install-platform-header svg { width: 26px; height: 26px; flex-shrink: 0; }
+    .install-platform-header h3 { font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #fff; }
 
-    .steps { display: flex; flex-direction: column; gap: 0; }
+    .steps { display: flex; flex-direction: column; }
     .step { display: flex; gap: 1rem; position: relative; }
-    .step:not(:last-child)::before {
-      content: ''; position: absolute; left: 17px; top: 36px;
-      width: 2px; bottom: 0; background: var(--border);
-    }
-    .step-num {
-      width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff;
-      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; position: relative; z-index: 1; box-shadow: 0 2px 8px rgba(0,159,227,.3);
-    }
-    .step-body { padding-top: 5px; padding-bottom: 1.5rem; }
-    .step-body strong { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .step-body p { font-size: 0.9rem; color: var(--text-sub); line-height: 1.6; }
-    .step-note {
-      margin-top: 0.5rem; background: var(--blue-light); border-left: 3px solid var(--blue);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 0.5rem 0.75rem;
-      font-size: 0.85rem; color: #0C4A6E;
-    }
+    .step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 36px; width: 2px; bottom: 0; background: rgba(255,255,255,.15); }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--blauw); color: #fff; font-family: var(--font-kop); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+    .step-body { padding-top: 6px; padding-bottom: 1.5rem; }
+    .step-body strong { display: block; font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
+    .step-body p { font-size: 0.88rem; color: rgba(255,255,255,.65); line-height: 1.6; }
+    .step-note { margin-top: 0.5rem; background: rgba(0,159,227,.15); border-left: 3px solid var(--blauw); padding: 0.5rem 0.75rem; font-size: 0.84rem; color: #BAE6FD; line-height: 1.5; }
+    .step-note strong { color: #fff; }
 
-    /* ── does / doesn't ── */
-    .does { background: var(--bg); }
+    /* ── DOET / DOET NIET ── */
+    .does { background: var(--grijs-lt); }
+    .does .section-title { color: var(--zwart); }
     .does-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
     @media (max-width: 680px) { .does-grid { grid-template-columns: 1fr; } }
 
-    .does-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow); }
-    .does-box h3 {
-      font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;
-      margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
-    }
-    .does-box h3 svg { width: 20px; height: 20px; }
-    .does-box.yes h3 { color: var(--green); }
-    .does-box.no h3  { color: var(--red); }
-
+    .does-box { background: var(--wit); border-radius: var(--radius-md); padding: 1.75rem; box-shadow: var(--shadow); }
+    .does-box.yes { border-top: 4px solid var(--groen); }
+    .does-box.no  { border-top: 4px solid var(--rood); }
+    .does-box h3 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--grijs); }
+    .does-box h3 svg { width: 18px; height: 18px; }
+    .does-box.yes h3 { color: var(--groen); }
+    .does-box.no  h3 { color: var(--rood); }
     .does-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-    .does-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.95rem; color: var(--text-sub); line-height: 1.5; }
-    .does-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
-    .yes .does-list li svg { color: var(--green); }
-    .no  .does-list li svg { color: var(--red); }
+    .does-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; color: var(--tekst-sub); line-height: 1.5; }
+    .does-list li svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; }
+    .yes .does-list li svg { color: var(--groen); }
+    .no  .does-list li svg { color: var(--rood); }
 
-    /* ── updates ── */
-    .updates { background: var(--surface); }
+    /* ── UPDATES ── */
+    .updates { background: var(--wit); }
+    .updates .section-title { color: var(--zwart); }
     .updates-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
-
-    .update-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem; box-shadow: var(--shadow); }
+    .update-card { background: var(--grijs-lt); border-left: 4px solid var(--blauw); border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1.5rem 1.75rem; box-shadow: var(--shadow); }
     .update-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
-    .update-version { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; }
-    .update-date { font-size: 0.85rem; color: var(--text-muted); }
-    .update-new { margin-left: auto; background: var(--blue); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+    .update-version { font-family: var(--font-kop); font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .update-date { font-size: 0.85rem; color: var(--tekst-mute); }
+    .update-new { margin-left: auto; background: var(--blauw); color: #fff; font-family: var(--font-kop); font-size: 0.7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; }
     .update-items { display: flex; flex-direction: column; gap: 0.5rem; }
-    .update-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; color: var(--text-sub); }
-    .update-chip { flex-shrink: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 4px; margin-top: 2px; }
+    .update-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: var(--tekst-sub); }
+    .update-chip { flex-shrink: 0; font-family: var(--font-kop); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 7px; border-radius: 3px; margin-top: 2px; }
     .chip-new     { background: #DCFCE7; color: #15803D; }
     .chip-changed { background: #FEF3C7; color: #92400E; }
     .more-releases { text-align: center; margin-top: 1.5rem; }
 
-    /* ── footer ── */
-    footer { background: #0C4A6E; color: rgba(255,255,255,.7); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; line-height: 1.8; }
-    footer a { color: #7DD3FC; text-decoration: none; }
+    /* ── FOOTER ── */
+    footer { background: var(--zwart); color: rgba(255,255,255,.6); padding: 3rem 1.5rem 2rem; }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+    .footer-logo img { height: 44px; filter: brightness(0) invert(1); opacity: .9; }
+    .footer-divider { width: 48px; height: 3px; background: var(--blauw); border-radius: 2px; }
+    footer p { font-size: 0.88rem; line-height: 1.7; }
+    footer a { color: var(--blauw); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-    footer strong { color: #fff; }
+    footer strong { color: rgba(255,255,255,.9); }
+    .footer-legal { font-size: 0.78rem; color: rgba(255,255,255,.35); margin-top: 0.5rem; }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; }
-      html { scroll-behavior: auto; }
-    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
 
 <a href="#main" class="skip-link">Ga naar inhoud</a>
 
+<!-- NAV -->
 <nav aria-label="Hoofdnavigatie">
   <div class="nav-inner">
-    <div class="nav-logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>
-      </svg>
-    </div>
-    <span class="nav-title">Mentordashboard CIOS</span>
-    <ul class="nav-links">
+    <a href="#" class="nav-logo" aria-label="CIOS Zuidwest-Nederland — startpagina">
+      <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland">
+    </a>
+    <div class="nav-divider" aria-hidden="true"></div>
+    <span class="nav-subtitle">Mentordashboard</span>
+    <ul class="nav-links" role="list">
       <li><a href="#download">Download</a></li>
       <li><a href="#installatie">Installeren</a></li>
       <li><a href="#functies">Functies</a></li>
       <li><a href="#updates">Updates</a></li>
     </ul>
-    <span class="nav-badge">v2.10.0</span>
+    <span class="nav-version">v2.10.0</span>
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- HERO -->
 <header class="hero" id="main">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-eyebrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Gratis voor CIOS mentoren
+      <div class="hero-logo">
+        <img src="logo-cios-wit.png" alt="CIOS Zuidwest-Nederland" style="filter:brightness(0) invert(1);height:52px;">
       </div>
-      <h1>Altijd in één oogopslag zien hoe het met je leerlingen gaat</h1>
-      <p class="hero-sub">Je importeert elk kwartaal een overzicht vanuit SomToday. Het programma laat daarna meteen zien welke leerlingen extra aandacht nodig hebben — zonder dat je door eindeloze lijsten hoeft te zoeken.</p>
+      <h1>
+        Altijd in één oogopslag zien
+        <span>hoe het met je leerlingen gaat</span>
+      </h1>
+      <p class="hero-sub">Je importeert elk kwartaal een overzicht vanuit Cumlaude. Het programma laat daarna meteen zien welke leerlingen extra aandacht nodig hebben — zonder dat je door eindeloze lijsten hoeft te zoeken.</p>
       <div class="hero-actions">
-        <a href="#download" class="btn btn-primary btn-lg">
+        <a href="#download" class="btn btn-blauw btn-lg">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download het programma
         </a>
-        <a href="#functies" class="btn btn-secondary btn-lg">Wat kan het?</a>
+        <a href="#functies" class="btn btn-outline btn-lg">Wat kan het?</a>
       </div>
       <p class="hero-note">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Werkt op Mac en Windows &nbsp;·&nbsp; Geen account nodig &nbsp;·&nbsp; Gegevens blijven op jouw computer
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Gratis · Geen account nodig · Gegevens blijven op jouw computer
       </p>
     </div>
     <div class="hero-visual" aria-hidden="true">
@@ -378,7 +305,15 @@
   </div>
 </header>
 
-<!-- Trust bar -->
+<!-- diagonaal vlak naar trust bar -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" style="height:48px;background:#0D0D0D;">
+    <polygon points="0,0 1440,0 1440,48 0,0" fill="#0D0D0D"/>
+    <polygon points="0,48 1440,48 1440,0" fill="#0D0D0D"/>
+  </svg>
+</span>
+
+<!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-inner">
     <div class="trust-item">
@@ -387,7 +322,7 @@
     </div>
     <div class="trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Geen account of wachtwoord nodig
+      Geen account nodig
     </div>
     <div class="trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -395,19 +330,25 @@
     </div>
     <div class="trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Gegevens veilig op jouw computer
+      Data veilig op jouw computer
     </div>
   </div>
 </div>
 
-<!-- Features -->
+<!-- diagonaal vlak naar features -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#F4F6F8;">
+    <polygon points="0,0 1440,52 0,52" fill="#0D0D0D"/>
+  </svg>
+</span>
+
+<!-- FEATURES -->
 <section class="features" id="functies">
   <div class="container">
     <p class="section-label">Wat kan het?</p>
-    <h2 class="section-title">Gemaakt voor mentoren, niet voor IT'ers</h2>
+    <h2 class="section-title">Gemaakt voor mentoren,<br>niet voor IT'ers</h2>
     <p class="section-sub">Je hoeft niets te begrijpen van techniek. Het programma doet het zware werk — jij ziet alleen wat belangrijk is.</p>
     <div class="features-grid">
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -415,15 +356,13 @@
         <h3>Rood, oranje of groen per leerling</h3>
         <p>Je ziet in één oogopslag wie aandacht nodig heeft. Rood = ingrijpen. Oranje = in de gaten houden. Groen = prima bezig.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
-        <h3>PDF van SomToday importeren</h3>
-        <p>Download het beoordelingsoverzicht uit SomToday, sleep het in het programma en alles staat klaar. Klaar in een minuut.</p>
+        <h3>PDF van Cumlaude importeren</h3>
+        <p>Download het beoordelingsoverzicht uit Cumlaude, sleep het in het programma en alles staat klaar. Klaar in een minuut.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -431,7 +370,6 @@
         <h3>Doorstroomprognose per leerling</h3>
         <p>Het programma berekent automatisch of een leerling op weg is naar SBL, SBC of BJ2, of dat bijsturing nodig is.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -439,7 +377,6 @@
         <h3>Niet ingeleverd en te laat in beeld</h3>
         <p>Je ziet per leerling hoeveel producten niet zijn ingeleverd of te laat zijn ingeleverd. Zo mis je nooit een signaal.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
@@ -447,7 +384,6 @@
         <h3>Meerdere klassen bijhouden</h3>
         <p>Je kunt meerdere klassen aanmaken en per klas leerlinggegevens opslaan. Handig als je mentor bent van meer dan één klas.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -455,31 +391,37 @@
         <h3>Gegevens veilig opgeslagen</h3>
         <p>Alle informatie staat versleuteld op jouw eigen computer. Er gaat niets naar het internet of naar een centrale server.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- Download -->
+<!-- diagonaal vlak naar download -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#fff;">
+    <polygon points="0,0 1440,0 1440,52 0,0" fill="#F4F6F8"/>
+  </svg>
+</span>
+
+<!-- DOWNLOAD -->
 <section class="download" id="download">
   <div class="container">
     <p class="section-label">Download</p>
-    <h2 class="section-title">Kies de versie die past bij jouw computer</h2>
+    <h2 class="section-title">Kies de versie die past<br>bij jouw computer</h2>
     <p class="section-sub">Weet je niet welk type Mac je hebt? Klik linksboven op het Apple-logo en kies <strong>Over deze Mac</strong>.</p>
     <div class="download-grid">
 
       <div class="dl-card">
         <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="14" fill="#F1F5F9"/>
-          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#1E293B"/>
-          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#1E293B"/>
+          <rect width="56" height="56" rx="10" fill="#E0F5FD"/>
+          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#009FE3"/>
+          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#009FE3"/>
         </svg>
         <div>
           <div class="dl-card-platform">macOS</div>
           <h3>Mac — Apple chip</h3>
         </div>
         <p class="dl-card-desc">Voor Macs met een M1, M2, M3 of M4 processor. Bij <strong>Over deze Mac</strong> staat "Apple M…".</p>
-        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_aarch64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Apple chip">
+        <a class="btn btn-blauw" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_aarch64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Apple chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download .dmg
         </a>
@@ -487,7 +429,7 @@
 
       <div class="dl-card">
         <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="14" fill="#F1F5F9"/>
+          <rect width="56" height="56" rx="10" fill="#E0F5FD"/>
           <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#64748B"/>
           <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#64748B"/>
         </svg>
@@ -496,7 +438,7 @@
           <h3>Mac — Intel chip</h3>
         </div>
         <p class="dl-card-desc">Voor oudere Macs met een Intel processor. Bij <strong>Over deze Mac</strong> staat "Intel Core…".</p>
-        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_x64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Intel chip">
+        <a class="btn btn-blauw" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_x64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Intel chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download .dmg
         </a>
@@ -504,7 +446,7 @@
 
       <div class="dl-card">
         <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="14" fill="#EFF6FF"/>
+          <rect width="56" height="56" rx="10" fill="#EFF6FF"/>
           <rect x="10" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
           <rect x="30" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
           <rect x="10" y="30" width="16" height="16" rx="2" fill="#3B82F6"/>
@@ -515,10 +457,8 @@
           <h3>Windows 10 of 11</h3>
         </div>
         <p class="dl-card-desc">Voor computers met Windows 10 of Windows 11. Werkt op alle gewone Windows-laptops en desktops.</p>
-        <div class="dl-card-hint">
-          <strong>Let op:</strong> Windows vraagt mogelijk om bevestiging. Klik dan op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>.
-        </div>
-        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/tag/v2.10.0" target="_blank" rel="noopener" style="width:100%;justify-content:center;" aria-label="Download voor Windows">
+        <div class="dl-card-hint"><strong>Let op:</strong> Windows vraagt mogelijk om bevestiging. Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>.</div>
+        <a class="btn btn-zwart" href="https://github.com/Unframed7175/mentordashboard-cios/releases/tag/v2.10.0" target="_blank" rel="noopener" style="width:100%;justify-content:center;" aria-label="Download voor Windows">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download .exe
         </a>
@@ -528,17 +468,24 @@
   </div>
 </section>
 
-<!-- Installatie -->
+<!-- diagonaal vlak naar installatie -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#0D0D0D;">
+    <polygon points="0,0 1440,0 0,52" fill="#FFFFFF"/>
+  </svg>
+</span>
+
+<!-- INSTALLATIE -->
 <section class="install" id="installatie">
   <div class="container">
     <p class="section-label">Installeren</p>
-    <h2 class="section-title">Stap voor stap het programma installeren</h2>
+    <h2 class="section-title">Stap voor stap<br>het programma installeren</h2>
     <p class="section-sub">Volg de stappen hieronder voor jouw computer. Het duurt gemiddeld twee minuten.</p>
     <div class="install-platforms">
 
       <div class="install-block">
         <div class="install-platform-header">
-          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1E293B" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#009FE3" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           <h3>Installeren op een Mac</h3>
         </div>
         <div class="steps">
@@ -567,10 +514,8 @@
             <div class="step-num" aria-hidden="true">4</div>
             <div class="step-body">
               <strong>Open het programma</strong>
-              <p>Zoek het programma op in je <em>Programma's</em>-map of Launchpad en dubbelklik erop.</p>
-              <div class="step-note">
-                <strong>Melding "niet geverifieerde ontwikkelaar"?</strong> Rechtsklik op het icoon → klik op <em>Open</em> → klik nogmaals op <em>Open</em>. Daarna hoef je dit niet meer te doen.
-              </div>
+              <p>Zoek het programma op in je Programma's-map of Launchpad en dubbelklik erop.</p>
+              <div class="step-note"><strong>Melding "niet geverifieerde ontwikkelaar"?</strong> Rechtsklik op het icoon → klik op <em>Open</em> → klik nogmaals op <em>Open</em>. Daarna hoef je dit niet meer te doen.</div>
             </div>
           </div>
           <div class="step">
@@ -585,7 +530,7 @@
 
       <div class="install-block">
         <div class="install-platform-header">
-          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#3B82F6" aria-hidden="true"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.16l-9 1.65V12h9zM3 13h6v6.57l-6-1.32V13zm17 0h-9v5.19l9 1.65V13z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#009FE3" aria-hidden="true"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.16l-9 1.65V12h9zM3 13h6v6.57l-6-1.32V13zm17 0h-9v5.19l9 1.65V13z"/></svg>
           <h3>Installeren op Windows</h3>
         </div>
         <div class="steps">
@@ -593,7 +538,7 @@
             <div class="step-num" aria-hidden="true">1</div>
             <div class="step-body">
               <strong>Download het bestand hierboven</strong>
-              <p>Klik op de oranje knop onder "Windows". Je downloadt een bestand dat eindigt op <em>.exe</em>.</p>
+              <p>Klik op de blauwe knop onder "Windows". Je downloadt een bestand dat eindigt op <em>.exe</em>.</p>
             </div>
           </div>
           <div class="step">
@@ -608,9 +553,7 @@
             <div class="step-body">
               <strong>Geef toestemming als Windows dat vraagt</strong>
               <p>Windows toont soms een blauw scherm met een waarschuwing. Dat is normaal bij programma's van buiten de Microsoft Store.</p>
-              <div class="step-note">
-                Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>. Het programma is veilig.
-              </div>
+              <div class="step-note">Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>. Het programma is veilig.</div>
             </div>
           </div>
           <div class="step">
@@ -634,21 +577,27 @@
   </div>
 </section>
 
-<!-- Wat doet het -->
+<!-- diagonaal vlak naar doet/niet -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#F4F6F8;">
+    <polygon points="1440,0 1440,52 0,52" fill="#0D0D0D"/>
+  </svg>
+</span>
+
+<!-- WAT DOET HET -->
 <section class="does" id="wat-doet-het">
   <div class="container">
     <p class="section-label">Wel en niet</p>
-    <h2 class="section-title">Wat kun je ermee, en wat niet?</h2>
+    <h2 class="section-title">Wat kun je ermee,<br>en wat niet?</h2>
     <p class="section-sub">Zo weet je precies wat je kunt verwachten voordat je het installeert.</p>
     <div class="does-grid">
-
       <div class="does-box yes">
         <h3>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           Dit kan het programma
         </h3>
         <ul class="does-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>PDF-rapporten importeren vanuit SomToday</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>PDF-rapporten importeren vanuit Cumlaude</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>In één oogopslag zien welke leerlingen aandacht nodig hebben</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Doorstroomprognose berekenen per leerling (BJ1 en BJ2)</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Niet-ingeleverde en te laat ingeleverde opdrachten tonen</li>
@@ -657,34 +606,37 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Een back-up maken en herstellen</li>
         </ul>
       </div>
-
       <div class="does-box no">
         <h3>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Dit kan het niet
         </h3>
         <ul class="does-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Rechtstreeks koppelen met SomToday (de PDF-import is handmatig)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Rechtstreeks koppelen met Cumlaude (de PDF-import is handmatig)</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Gegevens synchroniseren met een collega — elk apparaat heeft zijn eigen data</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Aanwezigheid registreren of roosters beheren</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Leerlinggegevens automatisch ophalen — je importeert zelf de PDF</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Werken op een telefoon of tablet — alleen Mac en Windows</li>
         </ul>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- Updates -->
+<!-- diagonaal vlak naar updates -->
+<span class="divider-down" aria-hidden="true">
+  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#fff;">
+    <polygon points="0,0 1440,0 1440,52 0,0" fill="#F4F6F8"/>
+  </svg>
+</span>
+
+<!-- UPDATES -->
 <section class="updates" id="updates">
   <div class="container">
     <p class="section-label">Versiegeschiedenis</p>
     <h2 class="section-title">Wat is er nieuw?</h2>
     <p class="section-sub">Het programma wordt regelmatig verbeterd. Hieronder zie je de laatste wijzigingen.</p>
-
     <div class="updates-list">
-
       <div class="update-card">
         <div class="update-head">
           <span class="update-version">Versie 2.10.0</span>
@@ -699,51 +651,39 @@
           <div class="update-item"><span class="update-chip chip-changed">Gewijzigd</span>Decimale cijfers (zoals 7,5) invoeren bij rekenen en Nederlands werkt nu correct.</div>
         </div>
       </div>
-
       <div class="update-card">
-        <div class="update-head">
-          <span class="update-version">Versie 2.9.0</span>
-          <span class="update-date">15 juni 2026</span>
-        </div>
-        <div class="update-items">
-          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>De indeling van deelgebieden staat nu in een apart bestand. Jaarlijkse aanpassingen van CIOS (nieuwe deelgebieden, andere namen) hoeven niet meer in de code te worden aangepast.</div>
-        </div>
+        <div class="update-head"><span class="update-version">Versie 2.9.0</span><span class="update-date">15 juni 2026</span></div>
+        <div class="update-items"><div class="update-item"><span class="update-chip chip-new">Nieuw</span>De indeling van deelgebieden staat nu in een apart bestand. Jaarlijkse aanpassingen van CIOS hoeven niet meer in de code te worden aangepast.</div></div>
       </div>
-
       <div class="update-card">
-        <div class="update-head">
-          <span class="update-version">Versie 2.8.0</span>
-          <span class="update-date">15 juni 2026</span>
-        </div>
-        <div class="update-items">
-          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Als de PDF-indeling is veranderd (nieuwe kolommen), geeft het programma nu een duidelijke waarschuwing. Zo zie je meteen of de import goed is gegaan.</div>
-        </div>
+        <div class="update-head"><span class="update-version">Versie 2.8.0</span><span class="update-date">15 juni 2026</span></div>
+        <div class="update-items"><div class="update-item"><span class="update-chip chip-new">Nieuw</span>Als de PDF-indeling is veranderd (nieuwe kolommen), geeft het programma nu een duidelijke waarschuwing. Zo zie je meteen of de import goed is gegaan.</div></div>
       </div>
-
       <div class="update-card">
-        <div class="update-head">
-          <span class="update-version">Versie 2.7.0</span>
-          <span class="update-date">13 juni 2026</span>
-        </div>
-        <div class="update-items">
-          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Je kunt nu alle gegevens wissen via de instellingen. Handig aan het begin van een nieuw schooljaar. Je kunt altijd eerst een back-up maken.</div>
-        </div>
+        <div class="update-head"><span class="update-version">Versie 2.7.0</span><span class="update-date">13 juni 2026</span></div>
+        <div class="update-items"><div class="update-item"><span class="update-chip chip-new">Nieuw</span>Je kunt nu alle gegevens wissen via de instellingen. Handig aan het begin van een nieuw schooljaar. Je kunt altijd eerst een back-up maken.</div></div>
       </div>
-
     </div>
-
     <div class="more-releases">
-      <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" rel="noopener" style="font-size:0.9rem;">
-        Alle versies bekijken op GitHub
-      </a>
+      <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" rel="noopener" style="font-size:0.88rem;">Alle versies bekijken</a>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p><strong>Mentordashboard CIOS</strong> — intern hulpmiddel voor CIOS mentoren</p>
-  <p style="margin-top:.5rem;">Vragen of problemen? Stuur een e-mail naar <a href="mailto:rafaelalvarez1010@gmail.com">rafaelalvarez1010@gmail.com</a></p>
-  <p style="margin-top:.5rem;font-size:.8rem;opacity:.6;">Versie 2.10.0 &nbsp;·&nbsp; Gegevens worden nooit gedeeld &nbsp;·&nbsp; Geen account nodig</p>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland">
+    </div>
+    <div class="footer-divider" aria-hidden="true"></div>
+    <p><strong>Mentordashboard CIOS</strong> — intern hulpmiddel voor CIOS mentoren</p>
+    <p>Vragen of problemen? Stuur een e-mail naar <a href="mailto:rafaelalvarez1010@gmail.com">rafaelalvarez1010@gmail.com</a></p>
+    <p class="footer-legal">
+      CIOS Zuidwest-Nederland is een samenwerkingscollege van Scalda en ROC Da Vinci College<br>
+      Versie 2.10.0 &nbsp;·&nbsp; Gegevens worden nooit gedeeld &nbsp;·&nbsp; Geen account nodig
+    </p>
+  </div>
 </footer>
 
 </body>

@@ -4,551 +4,746 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentordashboard CIOS — Download & Installatie</title>
+  <meta name="description" content="Gratis programma voor CIOS mentoren. Altijd een helder overzicht van je leerlingen. Download voor Mac of Windows.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-page:        #F1F5F9;
-      --bg-surface:     #FFFFFF;
-      --bg-surface-alt: #F8FAFC;
-      --text-primary:   #0F172A;
-      --text-secondary: #475569;
-      --text-muted:     #64748B;
-      --border:         #E2E8F0;
-      --accent:         #009FE3;
-      --accent-hover:   #007DBF;
-      --accent-light:   #E0F5FD;
-      --accent-text:    #00547A;
-      --rag-groen:      #22C55E;
-      --rag-oranje:     #F59E0B;
-      --rag-rood:       #EF4444;
-      --radius:         10px;
-      --shadow:         0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-      --shadow-md:      0 4px 12px rgba(0,0,0,.10);
+      --blue:        #009FE3;
+      --blue-dark:   #0077C2;
+      --blue-light:  #E0F5FD;
+      --orange:      #EA580C;
+      --orange-light:#FFF7ED;
+      --bg:          #F0F9FF;
+      --surface:     #FFFFFF;
+      --text:        #1E293B;
+      --text-sub:    #475569;
+      --text-muted:  #64748B;
+      --border:      #CBD5E1;
+      --green:       #16A34A;
+      --red:         #DC2626;
+      --radius-sm:   8px;
+      --radius:      14px;
+      --radius-lg:   20px;
+      --shadow:      0 1px 4px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+      --shadow-lg:   0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
     }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg-page);
-      color: var(--text-primary);
-      line-height: 1.6;
-      font-size: 15px;
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
+
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; line-height: 1.2; }
+
+    /* ── skip link ── */
+    .skip-link {
+      position: absolute; top: -100px; left: 1rem;
+      background: var(--blue); color: #fff;
+      padding: .5rem 1rem; border-radius: var(--radius-sm);
+      font-weight: 600; z-index: 100; transition: top .15s;
+    }
+    .skip-link:focus { top: 1rem; }
 
     /* ── nav ── */
     nav {
-      background: var(--bg-surface);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      height: 56px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
       box-shadow: var(--shadow);
     }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+      height: 64px; display: flex; align-items: center; gap: 1rem;
+    }
     .nav-logo {
-      width: 28px; height: 28px;
-      background: var(--accent);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 700; font-size: 13px; letter-spacing: -.5px;
-      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,159,227,.35);
     }
-    .nav-title { font-weight: 600; font-size: 15px; }
-    .nav-version {
-      margin-left: auto;
-      background: var(--accent-light);
-      color: var(--accent-text);
-      font-size: 12px; font-weight: 600;
-      padding: 2px 8px; border-radius: 99px;
+    .nav-logo svg { width: 20px; height: 20px; }
+    .nav-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+    .nav-badge {
+      margin-left: auto; background: var(--blue-light); color: var(--blue-dark);
+      font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 99px;
+      border: 1px solid #BAE6FD; letter-spacing: .02em;
     }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 500; color: var(--text-sub); text-decoration: none;
+      padding: 0.35rem 0.75rem; border-radius: var(--radius-sm);
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--blue-light); }
+    .nav-links a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    @media (max-width: 600px) { .nav-links { display: none; } }
+
+    /* ── buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1rem;
+      padding: 0.8rem 1.75rem; border-radius: var(--radius-sm); border: none;
+      cursor: pointer; text-decoration: none;
+      transition: transform .15s, box-shadow .15s, background .15s;
+      min-height: 52px; white-space: nowrap;
+    }
+    .btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .btn:active { transform: translateY(1px); }
+    .btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .btn-primary { background: var(--orange); color: #fff; box-shadow: 0 4px 14px rgba(234,88,12,.35); }
+    .btn-primary:hover { background: #C2410C; box-shadow: 0 6px 20px rgba(234,88,12,.45); transform: translateY(-1px); }
+
+    .btn-secondary { background: var(--surface); color: var(--blue-dark); border: 2px solid var(--blue); }
+    .btn-secondary:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+    .btn-ghost { background: transparent; color: var(--text-sub); border: 1.5px solid var(--border); }
+    .btn-ghost:hover { background: var(--surface); color: var(--text); }
+
+    .btn-lg { font-size: 1.1rem; padding: 1rem 2rem; min-height: 58px; }
 
     /* ── layout ── */
-    main { max-width: 800px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-
-    section { margin-bottom: 2.5rem; }
-
-    h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+    .section-label {
+      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem;
     }
+    .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--text); margin-bottom: 1rem; }
+    .section-sub { font-size: 1.05rem; color: var(--text-sub); max-width: 560px; line-height: 1.7; }
 
     /* ── hero ── */
     .hero {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow);
+      background: linear-gradient(160deg, #0C4A6E 0%, #0369A1 45%, #0EA5E9 100%);
+      padding: 6rem 0 5rem; overflow: hidden; position: relative;
     }
-    .hero h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
     }
-    .hero p { color: var(--text-secondary); max-width: 540px; }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; } .hero-visual { display: none; } }
 
-    /* ── download cards ── */
-    .download-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+      color: #BAE6FD; font-size: 0.85rem; font-weight: 600;
+      padding: 0.35rem 0.85rem; border-radius: 99px; margin-bottom: 1.25rem;
     }
-    @media (max-width: 540px) { .download-grid { grid-template-columns: 1fr; } }
+    .hero-eyebrow svg { width: 14px; height: 14px; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1.25rem; line-height: 1.15; }
+    .hero-sub { font-size: 1.1rem; color: #BAE6FD; line-height: 1.75; margin-bottom: 2rem; max-width: 480px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .hero-note { margin-top: 1.25rem; font-size: 0.875rem; color: rgba(186,230,253,.75); display: flex; align-items: center; gap: 0.4rem; }
+    .hero-note svg { width: 14px; height: 14px; }
 
-    .download-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      box-shadow: var(--shadow);
+    /* mockup */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .mockup {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 16px; padding: 1.25rem; width: 100%; max-width: 380px;
+      backdrop-filter: blur(8px);
     }
-    .download-card .platform {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      margin-bottom: 0.25rem;
+    .mockup-bar {
+      height: 28px; background: rgba(255,255,255,.15); border-radius: 8px;
+      margin-bottom: 1rem; display: flex; align-items: center; padding: 0 0.75rem; gap: 0.4rem;
     }
-    .download-card .name {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 0.15rem;
+    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .mockup-dot-r { background: #FCA5A5; }
+    .mockup-dot-y { background: #FCD34D; }
+    .mockup-dot-g { background: #86EFAC; }
+    .mockup-title { font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,.6); margin-left: 0.5rem; }
+    .mockup-cards { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mockup-card {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 8px; padding: 0.6rem 0.85rem; display: flex; align-items: center; gap: 0.75rem;
     }
-    .download-card .sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.875rem;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-    .btn:hover { background: var(--accent-hover); }
-    .btn-ghost {
-      background: var(--bg-surface-alt);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { background: var(--border); color: var(--text-primary); }
-    .coming-soon {
-      display: inline-block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      background: var(--bg-surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.45rem 0.9rem;
-    }
+    .mockup-rag { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .mockup-rag-g { background: #4ADE80; }
+    .mockup-rag-o { background: #FB923C; }
+    .mockup-rag-r { background: #F87171; }
+    .mockup-name { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,.9); flex: 1; }
+    .mockup-tag { font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 99px; }
+    .mockup-tag-g { background: rgba(74,222,128,.2); color: #86EFAC; }
+    .mockup-tag-o { background: rgba(251,146,60,.2); color: #FCD34D; }
+    .mockup-tag-r { background: rgba(248,113,113,.2); color: #FCA5A5; }
 
-    /* ── steps ── */
+    /* ── trust bar ── */
+    .trust-bar { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
+    .trust-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; }
+    .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); }
+    .trust-item svg { width: 18px; height: 18px; color: var(--green); }
+
+    /* ── features ── */
+    .features { background: var(--surface); }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    @media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 769px) and (max-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+
+    .feature-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem;
+      transition: box-shadow .2s, transform .2s; cursor: default;
+    }
+    .feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: var(--radius-sm);
+      background: var(--blue-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+    }
+    .feature-icon svg { width: 26px; height: 26px; color: var(--blue-dark); }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .feature-card p { font-size: 0.95rem; color: var(--text-sub); line-height: 1.65; }
+
+    /* ── download ── */
+    .download { background: var(--bg); }
+    .download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
+    @media (max-width: 900px) { .download-grid { grid-template-columns: 1fr; max-width: 460px; } }
+
+    .dl-card {
+      background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1rem;
+      box-shadow: var(--shadow); transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .dl-card:hover { border-color: var(--blue); box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .dl-card-icon { width: 56px; height: 56px; }
+    .dl-card-icon svg { width: 100%; height: 100%; }
+    .dl-card-platform { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+    .dl-card h3 { font-size: 1.2rem; font-weight: 700; margin-top: 0.1rem; margin-bottom: 0.1rem; }
+    .dl-card-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.5; flex: 1; }
+    .dl-card-hint {
+      background: var(--orange-light); border: 1px solid #FED7AA; border-radius: var(--radius-sm);
+      padding: 0.6rem 0.85rem; font-size: 0.8rem; color: #9A3412; line-height: 1.5;
+    }
+    .dl-card-hint strong { color: #7C2D12; }
+
+    /* ── install ── */
+    .install { background: var(--surface); }
+    .install-platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    @media (max-width: 768px) { .install-platforms { grid-template-columns: 1fr; } }
+
+    .install-block { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+    .install-platform-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+    }
+    .install-platform-header svg { width: 28px; height: 28px; flex-shrink: 0; }
+    .install-platform-header h3 { font-size: 1.1rem; font-weight: 700; }
+
     .steps { display: flex; flex-direction: column; gap: 0; }
-    .step {
-      display: flex;
-      gap: 1rem;
-      position: relative;
-    }
+    .step { display: flex; gap: 1rem; position: relative; }
     .step:not(:last-child)::before {
-      content: '';
-      position: absolute;
-      left: 15px; top: 32px;
-      width: 2px;
-      bottom: 0;
-      background: var(--border);
+      content: ''; position: absolute; left: 17px; top: 36px;
+      width: 2px; bottom: 0; background: var(--border);
     }
     .step-num {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: var(--accent-light);
-      color: var(--accent-text);
-      font-weight: 700;
-      font-size: 0.875rem;
+      width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
+      flex-shrink: 0; position: relative; z-index: 1; box-shadow: 0 2px 8px rgba(0,159,227,.3);
     }
-    .step-body { padding: 4px 0 1.5rem; }
-    .step-body strong { display: block; font-weight: 600; margin-bottom: 0.15rem; }
-    .step-body p, .step-body ul { color: var(--text-secondary); font-size: 0.9rem; }
-    .step-body ul { padding-left: 1.1rem; margin-top: 0.25rem; }
-    .step-body ul li { margin-bottom: 0.15rem; }
-    code {
-      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
-      background: var(--bg-surface-alt);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1px 5px;
-      font-size: 0.85em;
-      color: var(--accent-text);
+    .step-body { padding-top: 5px; padding-bottom: 1.5rem; }
+    .step-body strong { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body p { font-size: 0.9rem; color: var(--text-sub); line-height: 1.6; }
+    .step-note {
+      margin-top: 0.5rem; background: var(--blue-light); border-left: 3px solid var(--blue);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 0.5rem 0.75rem;
+      font-size: 0.85rem; color: #0C4A6E;
     }
 
-    /* ── wat doet het ── */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    /* ── does / doesn't ── */
+    .does { background: var(--bg); }
+    .does-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    @media (max-width: 680px) { .does-grid { grid-template-columns: 1fr; } }
+
+    .does-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow); }
+    .does-box h3 {
+      font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
     }
-    @media (max-width: 540px) { .feature-grid { grid-template-columns: 1fr; } }
-    .feature-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      box-shadow: var(--shadow);
-    }
-    .feature-box h3 {
-      font-size: 0.875rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .feature-box.doet h3 { color: #15803D; }
-    .feature-box.doet-niet h3 { color: #991B1B; }
-    .feature-box ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .feature-box ul li {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      display: flex;
-      gap: 0.4rem;
-    }
-    .feature-box ul li::before {
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .feature-box.doet ul li::before { content: '✓'; color: var(--rag-groen); font-weight: 700; }
-    .feature-box.doet-niet ul li::before { content: '✗'; color: var(--rag-rood); font-weight: 700; }
+    .does-box h3 svg { width: 20px; height: 20px; }
+    .does-box.yes h3 { color: var(--green); }
+    .does-box.no h3  { color: var(--red); }
+
+    .does-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .does-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.95rem; color: var(--text-sub); line-height: 1.5; }
+    .does-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .yes .does-list li svg { color: var(--green); }
+    .no  .does-list li svg { color: var(--red); }
 
     /* ── updates ── */
-    .update-entry {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 1rem;
-    }
-    .update-entry:last-child { margin-bottom: 0; }
-    .update-header {
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-    .update-version {
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    .update-date {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .update-badge {
-      margin-left: auto;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 99px;
-      background: var(--accent-light);
-      color: var(--accent-text);
-    }
-    .update-items { display: flex; flex-direction: column; gap: 0.35rem; }
-    .update-item {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      display: flex;
-      gap: 0.5rem;
-    }
-    .update-item-label {
-      flex-shrink: 0;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 4px;
-      margin-top: 1px;
-      align-self: flex-start;
-    }
-    .label-added   { background: #DCFCE7; color: #15803D; }
-    .label-changed { background: #FEF3C7; color: #92400E; }
-    .label-fixed   { background: #DBEAFE; color: #1D4ED8; }
+    .updates { background: var(--surface); }
+    .updates-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
+
+    .update-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem; box-shadow: var(--shadow); }
+    .update-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .update-version { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; }
+    .update-date { font-size: 0.85rem; color: var(--text-muted); }
+    .update-new { margin-left: auto; background: var(--blue); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+    .update-items { display: flex; flex-direction: column; gap: 0.5rem; }
+    .update-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; color: var(--text-sub); }
+    .update-chip { flex-shrink: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 4px; margin-top: 2px; }
+    .chip-new     { background: #DCFCE7; color: #15803D; }
+    .chip-changed { background: #FEF3C7; color: #92400E; }
+    .more-releases { text-align: center; margin-top: 1.5rem; }
 
     /* ── footer ── */
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      padding: 2rem 1rem;
-      border-top: 1px solid var(--border);
-      margin-top: 1rem;
-    }
-    footer a { color: var(--accent); text-decoration: none; }
+    footer { background: #0C4A6E; color: rgba(255,255,255,.7); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.9rem; line-height: 1.8; }
+    footer a { color: #7DD3FC; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    footer strong { color: #fff; }
 
-    /* ── note banner ── */
-    .note {
-      background: #FEF3C7;
-      border: 1px solid #FDE68A;
-      color: #92400E;
-      border-radius: 6px;
-      padding: 0.6rem 1rem;
-      font-size: 0.85rem;
-      margin-top: 0.75rem;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">MC</div>
-  <span class="nav-title">Mentordashboard CIOS</span>
-  <span class="nav-version">v2.10.0</span>
+<a href="#main" class="skip-link">Ga naar inhoud</a>
+
+<nav aria-label="Hoofdnavigatie">
+  <div class="nav-inner">
+    <div class="nav-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>
+      </svg>
+    </div>
+    <span class="nav-title">Mentordashboard CIOS</span>
+    <ul class="nav-links">
+      <li><a href="#download">Download</a></li>
+      <li><a href="#installatie">Installeren</a></li>
+      <li><a href="#functies">Functies</a></li>
+      <li><a href="#updates">Updates</a></li>
+    </ul>
+    <span class="nav-badge">v2.10.0</span>
+  </div>
 </nav>
 
-<main>
-
-  <!-- Hero -->
-  <div class="hero">
-    <h1>Mentordashboard CIOS</h1>
-    <p>Een intern hulpmiddel voor mentoren om leerlingvoortgang, doorstroomprognose en verzuim bij te houden. Data blijft lokaal op je computer — er gaat niets naar een server.</p>
+<!-- Hero -->
+<header class="hero" id="main">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Gratis voor CIOS mentoren
+      </div>
+      <h1>Altijd in één oogopslag zien hoe het met je leerlingen gaat</h1>
+      <p class="hero-sub">Je importeert elk kwartaal een overzicht vanuit SomToday. Het programma laat daarna meteen zien welke leerlingen extra aandacht nodig hebben — zonder dat je door eindeloze lijsten hoeft te zoeken.</p>
+      <div class="hero-actions">
+        <a href="#download" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download het programma
+        </a>
+        <a href="#functies" class="btn btn-secondary btn-lg">Wat kan het?</a>
+      </div>
+      <p class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Werkt op Mac en Windows &nbsp;·&nbsp; Geen account nodig &nbsp;·&nbsp; Gegevens blijven op jouw computer
+      </p>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dot mockup-dot-r"></div>
+          <div class="mockup-dot mockup-dot-y"></div>
+          <div class="mockup-dot mockup-dot-g"></div>
+          <span class="mockup-title">Mentordashboard — Klas 3A</span>
+        </div>
+        <div class="mockup-cards">
+          <div class="mockup-card"><div class="mockup-rag mockup-rag-r"></div><span class="mockup-name">De Vries, L.</span><span class="mockup-tag mockup-tag-r">Risico</span></div>
+          <div class="mockup-card"><div class="mockup-rag mockup-rag-o"></div><span class="mockup-name">Bakker, S.</span><span class="mockup-tag mockup-tag-o">Twijfel</span></div>
+          <div class="mockup-card"><div class="mockup-rag mockup-rag-g"></div><span class="mockup-name">Jansen, M.</span><span class="mockup-tag mockup-tag-g">Op koers</span></div>
+          <div class="mockup-card"><div class="mockup-rag mockup-rag-g"></div><span class="mockup-name">Smit, R.</span><span class="mockup-tag mockup-tag-g">SBL</span></div>
+          <div class="mockup-card"><div class="mockup-rag mockup-rag-o"></div><span class="mockup-name">Peters, K.</span><span class="mockup-tag mockup-tag-o">Let op — KD</span></div>
+        </div>
+      </div>
+    </div>
   </div>
+</header>
 
-  <!-- Download -->
-  <section id="download">
-    <h2>Download</h2>
+<!-- Trust bar -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Helemaal gratis
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Geen account of wachtwoord nodig
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Werkt zonder internet
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Gegevens veilig op jouw computer
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="features" id="functies">
+  <div class="container">
+    <p class="section-label">Wat kan het?</p>
+    <h2 class="section-title">Gemaakt voor mentoren, niet voor IT'ers</h2>
+    <p class="section-sub">Je hoeft niets te begrijpen van techniek. Het programma doet het zware werk — jij ziet alleen wat belangrijk is.</p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Rood, oranje of groen per leerling</h3>
+        <p>Je ziet in één oogopslag wie aandacht nodig heeft. Rood = ingrijpen. Oranje = in de gaten houden. Groen = prima bezig.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>PDF van SomToday importeren</h3>
+        <p>Download het beoordelingsoverzicht uit SomToday, sleep het in het programma en alles staat klaar. Klaar in een minuut.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Doorstroomprognose per leerling</h3>
+        <p>Het programma berekent automatisch of een leerling op weg is naar SBL, SBC of BJ2, of dat bijsturing nodig is.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Niet ingeleverd en te laat in beeld</h3>
+        <p>Je ziet per leerling hoeveel producten niet zijn ingeleverd of te laat zijn ingeleverd. Zo mis je nooit een signaal.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <h3>Meerdere klassen bijhouden</h3>
+        <p>Je kunt meerdere klassen aanmaken en per klas leerlinggegevens opslaan. Handig als je mentor bent van meer dan één klas.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Gegevens veilig opgeslagen</h3>
+        <p>Alle informatie staat versleuteld op jouw eigen computer. Er gaat niets naar het internet of naar een centrale server.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Download -->
+<section class="download" id="download">
+  <div class="container">
+    <p class="section-label">Download</p>
+    <h2 class="section-title">Kies de versie die past bij jouw computer</h2>
+    <p class="section-sub">Weet je niet welk type Mac je hebt? Klik linksboven op het Apple-logo en kies <strong>Over deze Mac</strong>.</p>
     <div class="download-grid">
 
-      <div class="download-card">
-        <div class="platform">macOS · Apple Silicon</div>
-        <div class="name">Mentordashboard CIOS</div>
-        <div class="sub">Mac met M1, M2, M3 of M4 chip</div>
-        <a class="btn" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_aarch64.dmg">
-          ↓ Download .dmg
+      <div class="dl-card">
+        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <rect width="56" height="56" rx="14" fill="#F1F5F9"/>
+          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#1E293B"/>
+          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#1E293B"/>
+        </svg>
+        <div>
+          <div class="dl-card-platform">macOS</div>
+          <h3>Mac — Apple chip</h3>
+        </div>
+        <p class="dl-card-desc">Voor Macs met een M1, M2, M3 of M4 processor. Bij <strong>Over deze Mac</strong> staat "Apple M…".</p>
+        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_aarch64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Apple chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .dmg
         </a>
       </div>
 
-      <div class="download-card">
-        <div class="platform">macOS · Intel</div>
-        <div class="name">Mentordashboard CIOS</div>
-        <div class="sub">Mac met Intel processor (voor 2020)</div>
-        <a class="btn" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_x64.dmg">
-          ↓ Download .dmg
+      <div class="dl-card">
+        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <rect width="56" height="56" rx="14" fill="#F1F5F9"/>
+          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#64748B"/>
+          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#64748B"/>
+        </svg>
+        <div>
+          <div class="dl-card-platform">macOS</div>
+          <h3>Mac — Intel chip</h3>
+        </div>
+        <p class="dl-card-desc">Voor oudere Macs met een Intel processor. Bij <strong>Over deze Mac</strong> staat "Intel Core…".</p>
+        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.10.0/Mentordashboard.CIOS_2.10.0_x64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Intel chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .dmg
         </a>
       </div>
 
-      <div class="download-card">
-        <div class="platform">Windows · 64-bit</div>
-        <div class="name">Mentordashboard CIOS</div>
-        <div class="sub">Windows 10 of 11</div>
-        <a class="btn" href="https://github.com/Unframed7175/mentordashboard-cios/releases/tag/v2.10.0" target="_blank">
-          ↓ Download .exe
-        </a>
-      </div>
-
-      <div class="download-card">
-        <div class="platform">Alle versies</div>
-        <div class="name">Vorige versies</div>
-        <div class="sub">Changelog en oudere installers</div>
-        <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank">
-          Alle releases →
+      <div class="dl-card">
+        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <rect width="56" height="56" rx="14" fill="#EFF6FF"/>
+          <rect x="10" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
+          <rect x="30" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
+          <rect x="10" y="30" width="16" height="16" rx="2" fill="#3B82F6"/>
+          <rect x="30" y="30" width="16" height="16" rx="2" fill="#3B82F6"/>
+        </svg>
+        <div>
+          <div class="dl-card-platform">Windows</div>
+          <h3>Windows 10 of 11</h3>
+        </div>
+        <p class="dl-card-desc">Voor computers met Windows 10 of Windows 11. Werkt op alle gewone Windows-laptops en desktops.</p>
+        <div class="dl-card-hint">
+          <strong>Let op:</strong> Windows vraagt mogelijk om bevestiging. Klik dan op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>.
+        </div>
+        <a class="btn btn-primary" href="https://github.com/Unframed7175/mentordashboard-cios/releases/tag/v2.10.0" target="_blank" rel="noopener" style="width:100%;justify-content:center;" aria-label="Download voor Windows">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .exe
         </a>
       </div>
 
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Installatie -->
-  <section id="installatie">
-    <h2>Installatie</h2>
+<!-- Installatie -->
+<section class="install" id="installatie">
+  <div class="container">
+    <p class="section-label">Installeren</p>
+    <h2 class="section-title">Stap voor stap het programma installeren</h2>
+    <p class="section-sub">Volg de stappen hieronder voor jouw computer. Het duurt gemiddeld twee minuten.</p>
+    <div class="install-platforms">
 
-    <div style="margin-bottom:1.5rem;">
-      <strong style="font-size:0.9rem;color:var(--text-secondary);display:block;margin-bottom:0.75rem;">macOS</strong>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <strong>Download het juiste .dmg bestand</strong>
-            <p>Weet je niet welke chip je Mac heeft? Ga naar  → <em>Over deze Mac</em>. Staat er "Apple M…" → Apple Silicon. Staat er "Intel" → Intel versie.</p>
-          </div>
+      <div class="install-block">
+        <div class="install-platform-header">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1E293B" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <h3>Installeren op een Mac</h3>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <strong>Open het .dmg bestand</strong>
-            <p>Dubbelklik op het gedownloade bestand. Sleep het Mentordashboard-icoon naar de map <em>Programma's</em>.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" aria-hidden="true">1</div>
+            <div class="step-body">
+              <strong>Download het juiste bestand hierboven</strong>
+              <p>Weet je niet welke versie? Klik linksboven op het Apple-logo → <em>Over deze Mac</em>. Staat er "Apple M…"? Kies Apple chip. Staat er "Intel"? Kies Intel chip.</p>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <strong>Eerste keer openen</strong>
-            <p>macOS blokkeert de app omdat die van buiten de App Store komt. Rechtsklik op het icoon → <em>Open</em> → klik nogmaals op <em>Open</em> in het dialoogvenster. Dit hoef je maar één keer te doen.</p>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">2</div>
+            <div class="step-body">
+              <strong>Open het gedownloade bestand</strong>
+              <p>Ga naar je <em>Downloads</em>-map en dubbelklik op het bestand dat eindigt op <em>.dmg</em>.</p>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <strong>Klaar</strong>
-            <p>De wizard begeleidt je bij het aanmaken van je eerste klas en het importeren van een PDF.</p>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">3</div>
+            <div class="step-body">
+              <strong>Sleep het naar Programma's</strong>
+              <p>Er opent een venster. Sleep het Mentordashboard-icoon naar de map <em>Programma's</em> die je daar ziet staan.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">4</div>
+            <div class="step-body">
+              <strong>Open het programma</strong>
+              <p>Zoek het programma op in je <em>Programma's</em>-map of Launchpad en dubbelklik erop.</p>
+              <div class="step-note">
+                <strong>Melding "niet geverifieerde ontwikkelaar"?</strong> Rechtsklik op het icoon → klik op <em>Open</em> → klik nogmaals op <em>Open</em>. Daarna hoef je dit niet meer te doen.
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">5</div>
+            <div class="step-body">
+              <strong>Klaar!</strong>
+              <p>Het programma start op met een korte rondleiding. Volg de stappen om je eerste klas aan te maken.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div>
-      <strong style="font-size:0.9rem;color:var(--text-secondary);display:block;margin-bottom:0.75rem;">Windows</strong>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <strong>Download het .exe installatiebestand</strong>
-            <p>Klik op <em>Download .exe</em> hierboven en sla het bestand op.</p>
-          </div>
+      <div class="install-block">
+        <div class="install-platform-header">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#3B82F6" aria-hidden="true"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.16l-9 1.65V12h9zM3 13h6v6.57l-6-1.32V13zm17 0h-9v5.19l9 1.65V13z"/></svg>
+          <h3>Installeren op Windows</h3>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <strong>Installeer de app</strong>
-            <p>Dubbelklik op het .exe bestand. Mogelijk verschijnt een melding van Windows Defender ("onbekende uitgever") — klik op <em>Meer info</em> → <em>Toch uitvoeren</em>.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" aria-hidden="true">1</div>
+            <div class="step-body">
+              <strong>Download het bestand hierboven</strong>
+              <p>Klik op de oranje knop onder "Windows". Je downloadt een bestand dat eindigt op <em>.exe</em>.</p>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <strong>Klaar</strong>
-            <p>De app staat in het Startmenu als <em>Mentordashboard CIOS</em>.</p>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">2</div>
+            <div class="step-body">
+              <strong>Open het gedownloade bestand</strong>
+              <p>Ga naar je <em>Downloads</em>-map en dubbelklik op het gedownloade bestand.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">3</div>
+            <div class="step-body">
+              <strong>Geef toestemming als Windows dat vraagt</strong>
+              <p>Windows toont soms een blauw scherm met een waarschuwing. Dat is normaal bij programma's van buiten de Microsoft Store.</p>
+              <div class="step-note">
+                Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>. Het programma is veilig.
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">4</div>
+            <div class="step-body">
+              <strong>Volg de installatie</strong>
+              <p>Klik op <em>Volgende</em> en daarna op <em>Installeren</em>. Het programma wordt automatisch geïnstalleerd.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" aria-hidden="true">5</div>
+            <div class="step-body">
+              <strong>Klaar!</strong>
+              <p>Je vindt het programma in het Startmenu onder <em>Mentordashboard CIOS</em>. Bij de eerste start zie je een korte rondleiding.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="note">
-      <strong>Vragen bij installatie?</strong> Neem contact op met Rafael (rafaelalvarez1010@gmail.com).
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Wat doet het -->
-  <section id="functies">
-    <h2>Wat doet het</h2>
-    <div class="feature-grid">
-      <div class="feature-box doet">
-        <h3>✓ Wat het doet</h3>
-        <ul>
-          <li>PDF-rapporten van SomToday importeren per leerling</li>
-          <li>Doorstroomprognose berekenen (BJ1/BJ2) op basis van beoordelingen</li>
-          <li>RAG-kleuren tonen per leerling (rood / oranje / groen)</li>
-          <li>Beoordelingen aggregeren per deelgebied (S/C-compensatieformule)</li>
-          <li>Keuzedelen bijhouden met basisjaar-classificatie</li>
-          <li>Inlever-status tonen (niet ingeleverd / te laat)</li>
-          <li>Verzuim registreren en waarschuwingen tonen</li>
-          <li>Rekenen en Nederlands scores bijhouden</li>
-          <li>Meerdere klassen beheren</li>
-          <li>Data versleuteld opslaan en back-ups maken</li>
+<!-- Wat doet het -->
+<section class="does" id="wat-doet-het">
+  <div class="container">
+    <p class="section-label">Wel en niet</p>
+    <h2 class="section-title">Wat kun je ermee, en wat niet?</h2>
+    <p class="section-sub">Zo weet je precies wat je kunt verwachten voordat je het installeert.</p>
+    <div class="does-grid">
+
+      <div class="does-box yes">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Dit kan het programma
+        </h3>
+        <ul class="does-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>PDF-rapporten importeren vanuit SomToday</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>In één oogopslag zien welke leerlingen aandacht nodig hebben</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Doorstroomprognose berekenen per leerling (BJ1 en BJ2)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Niet-ingeleverde en te laat ingeleverde opdrachten tonen</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Keuzedelen en rekenen/Nederlands bijhouden</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Meerdere klassen beheren</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Een back-up maken en herstellen</li>
         </ul>
       </div>
-      <div class="feature-box doet-niet">
-        <h3>✗ Wat het niet doet</h3>
-        <ul>
-          <li>Directe koppeling met SomToday (PDF-import is handmatig)</li>
-          <li>Online synchroniseren — data staat alleen op jouw computer</li>
-          <li>Aanwezigheidsregistratie bijhouden</li>
-          <li>Roosters of lesplannen beheren</li>
-          <li>Automatisch updaten van leerlinggegevens</li>
-          <li>Data delen met collega's (per toestel)</li>
+
+      <div class="does-box no">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Dit kan het niet
+        </h3>
+        <ul class="does-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Rechtstreeks koppelen met SomToday (de PDF-import is handmatig)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Gegevens synchroniseren met een collega — elk apparaat heeft zijn eigen data</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Aanwezigheid registreren of roosters beheren</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Leerlinggegevens automatisch ophalen — je importeert zelf de PDF</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Werken op een telefoon of tablet — alleen Mac en Windows</li>
         </ul>
       </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Updates -->
-  <section id="updates">
-    <h2>Recente updates</h2>
+<!-- Updates -->
+<section class="updates" id="updates">
+  <div class="container">
+    <p class="section-label">Versiegeschiedenis</p>
+    <h2 class="section-title">Wat is er nieuw?</h2>
+    <p class="section-sub">Het programma wordt regelmatig verbeterd. Hieronder zie je de laatste wijzigingen.</p>
 
-    <div class="update-entry">
-      <div class="update-header">
-        <span class="update-version">v2.10.0</span>
-        <span class="update-date">16 juni 2026</span>
-        <span class="update-badge">Nieuwste</span>
+    <div class="updates-list">
+
+      <div class="update-card">
+        <div class="update-head">
+          <span class="update-version">Versie 2.10.0</span>
+          <span class="update-date">16 juni 2026</span>
+          <span class="update-new">Nieuwste versie</span>
+        </div>
+        <div class="update-items">
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Het programma berekent de prognose nu nauwkeuriger: goede cijfers kunnen mindere cijfers compenseren, net zoals in de echte beoordeling.</div>
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Je ziet nu per leerling hoeveel producten <em>niet ingeleverd</em> (rood) of <em>te laat</em> (oranje) zijn.</div>
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Uitgebreide doorstroomcriteria voor BJ1 (Versneld SBC) en BJ2 (SBL/SBC) met taalscores en stage-uren.</div>
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Keuzedelen kun je nu indelen per basisjaar (BJ1 of BJ2). KD uit BJ1 wordt automatisch afgeleid.</div>
+          <div class="update-item"><span class="update-chip chip-changed">Gewijzigd</span>Decimale cijfers (zoals 7,5) invoeren bij rekenen en Nederlands werkt nu correct.</div>
+        </div>
       </div>
-      <div class="update-items">
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>S/C-compensatieformule — nauwkeurigere cijferaggregatie per deelgebied (excellente scores compenseren voldoende scores)</div>
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Uitgebreide doorstroomcriteria voor BJ1 (Versneld SBC) en BJ2 (SBL/SBC) met taalscores en stage-uren</div>
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Keuzedelen basisjaar — elk keuzedeel classificeren als BJ1 of BJ2; kdBJ1 automatisch afgeleid</div>
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Inlever-tellers in prognosekaart — hoeveel producten niet ingeleverd (rood) en te laat (oranje)</div>
-        <div class="update-item"><span class="update-item-label label-changed">Gewijzigd</span>Decimale invoer rekenen/Nederlands werkt nu correct met komma</div>
+
+      <div class="update-card">
+        <div class="update-head">
+          <span class="update-version">Versie 2.9.0</span>
+          <span class="update-date">15 juni 2026</span>
+        </div>
+        <div class="update-items">
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>De indeling van deelgebieden staat nu in een apart bestand. Jaarlijkse aanpassingen van CIOS (nieuwe deelgebieden, andere namen) hoeven niet meer in de code te worden aangepast.</div>
+        </div>
       </div>
+
+      <div class="update-card">
+        <div class="update-head">
+          <span class="update-version">Versie 2.8.0</span>
+          <span class="update-date">15 juni 2026</span>
+        </div>
+        <div class="update-items">
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Als de PDF-indeling is veranderd (nieuwe kolommen), geeft het programma nu een duidelijke waarschuwing. Zo zie je meteen of de import goed is gegaan.</div>
+        </div>
+      </div>
+
+      <div class="update-card">
+        <div class="update-head">
+          <span class="update-version">Versie 2.7.0</span>
+          <span class="update-date">13 juni 2026</span>
+        </div>
+        <div class="update-items">
+          <div class="update-item"><span class="update-chip chip-new">Nieuw</span>Je kunt nu alle gegevens wissen via de instellingen. Handig aan het begin van een nieuw schooljaar. Je kunt altijd eerst een back-up maken.</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="update-entry">
-      <div class="update-header">
-        <span class="update-version">v2.9.0</span>
-        <span class="update-date">15 juni 2026</span>
-      </div>
-      <div class="update-items">
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Leerlijn-configuratie losgekoppeld van de code — jaarlijkse schemawijzigingen (nieuwe deelgebieden, hernoemde labels) vereisen geen app-update meer</div>
-      </div>
-    </div>
-
-    <div class="update-entry">
-      <div class="update-header">
-        <span class="update-version">v2.8.0</span>
-        <span class="update-date">15 juni 2026</span>
-      </div>
-      <div class="update-items">
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Automatische kolomdetectie — PDF-parser herkent nieuwe of hernoemde kolommen en toont een drift-banner</div>
-        <div class="update-item"><span class="update-item-label label-changed">Gewijzigd</span>Kolomherkenning en vak-kopregels via paginabreedte en fontgrootte — robuuster bij jaarlijkse schemawijzigingen</div>
-      </div>
-    </div>
-
-    <div class="update-entry">
-      <div class="update-header">
-        <span class="update-version">v2.7.0</span>
-        <span class="update-date">13 juni 2026</span>
-      </div>
-      <div class="update-items">
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Fabrieksreset — alle gegevens wissen met bevestiging en optionele back-up vooraf</div>
-        <div class="update-item"><span class="update-item-label label-added">Nieuw</span>Back-up v2 — back-upbestand bevat nu ook alle app-instellingen</div>
-      </div>
-    </div>
-
-    <div style="margin-top:1rem;text-align:center;">
-      <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" style="font-size:0.85rem;">
-        Alle versies bekijken →
+    <div class="more-releases">
+      <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" rel="noopener" style="font-size:0.9rem;">
+        Alle versies bekijken op GitHub
       </a>
     </div>
-  </section>
-
-</main>
+  </div>
+</section>
 
 <footer>
-  Mentordashboard CIOS — intern hulpmiddel CIOS &nbsp;·&nbsp;
-  <a href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank">GitHub Releases</a>
-  &nbsp;·&nbsp; Vragen? <a href="mailto:rafaelalvarez1010@gmail.com">rafaelalvarez1010@gmail.com</a>
+  <p><strong>Mentordashboard CIOS</strong> — intern hulpmiddel voor CIOS mentoren</p>
+  <p style="margin-top:.5rem;">Vragen of problemen? Stuur een e-mail naar <a href="mailto:rafaelalvarez1010@gmail.com">rafaelalvarez1010@gmail.com</a></p>
+  <p style="margin-top:.5rem;font-size:.8rem;opacity:.6;">Versie 2.10.0 &nbsp;·&nbsp; Gegevens worden nooit gedeeld &nbsp;·&nbsp; Geen account nodig</p>
 </footer>
 
 </body>

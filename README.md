@@ -36,7 +36,7 @@ Na de push is de pagina binnen ~1 minuut bijgewerkt.
 | Versienummer in navigatiebalk | `<span class="nav-version">` |
 | Download-links macOS arm64 | `aarch64.dmg` |
 | Download-links macOS Intel | `x64.dmg` |
-| Download-link Windows | `releases/tag/v2.x.x` |
+| Download-link Windows | `x64-setup.exe` |
 | Installatie-instructies | `<section id="installatie">` |
 | Functielijst (doet wel/niet) | `<section id="functies">` |
 | Release notes | `<section id="updates">` |
@@ -46,7 +46,7 @@ Na de push is de pagina binnen ~1 minuut bijgewerkt.
 ## Nieuwe versie uitbrengen — checklist
 
 - [ ] Versienummer bijwerken in `<span class="nav-version">`
-- [ ] Download-links aanpassen naar nieuwe versie (3 plekken: macOS arm64, macOS x64, Windows)
+- [ ] Download-links aanpassen naar nieuwe versie (3 plekken: macOS arm64 `_aarch64.dmg`, macOS x64 `_x64.dmg`, Windows `_x64-setup.exe`)
 - [ ] Nieuwe entry toevoegen bovenaan `<section id="updates">` (kopieer een bestaand blok)
 - [ ] `update-badge` ("Nieuwste") verplaatsen naar de nieuwe entry, verwijderen uit de vorige
 - [ ] Commit en push

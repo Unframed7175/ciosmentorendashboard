@@ -37,7 +37,8 @@ Na de push is de pagina binnen ~1 minuut bijgewerkt.
 | Download-links macOS arm64 | `aarch64.dmg` |
 | Download-links macOS Intel | `x64.dmg` |
 | Download-link Windows | `x64-setup.exe` |
-| Installatie-instructies | `<section id="installatie">` |
+| Installatie-instructies Mac | `<section id="installatie">` → zoek naar `Installeren op een Mac` |
+| Installatie-instructies Windows | `<section id="installatie">` → zoek naar `Installeren op Windows` |
 | Functielijst (doet wel/niet) | `<section id="functies">` |
 | Release notes | `<section id="updates">` |
 
@@ -49,4 +50,5 @@ Na de push is de pagina binnen ~1 minuut bijgewerkt.
 - [ ] Download-links aanpassen naar nieuwe versie (3 plekken: macOS arm64 `_aarch64.dmg`, macOS x64 `_x64.dmg`, Windows `_x64-setup.exe`)
 - [ ] Nieuwe entry toevoegen bovenaan `<section id="updates">` (kopieer een bestaand blok)
 - [ ] `update-badge` ("Nieuwste") verplaatsen naar de nieuwe entry, verwijderen uit de vorige
+- [ ] Mac Gatekeeper-stap controleren bij macOS-versiewijziging (stap 4 onder "Installeren op een Mac")
 - [ ] Commit en push

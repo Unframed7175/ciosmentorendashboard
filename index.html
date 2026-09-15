@@ -4,629 +4,509 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentordashboard — CIOS Zuidwest-Nederland</title>
-  <meta name="description" content="Gratis programma voor CIOS mentoren. Altijd een helder overzicht van je leerlingen. Download voor Mac of Windows.">
-
-  <!-- Barlow Condensed: dichtst bij Industry voor web -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <meta name="description" content="Gratis programma voor CIOS-mentoren. Altijd een helder overzicht van je leerlingen. Installeren op Windows of Mac.">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Design system: .gsd/DESIGN.md (mentordashboard-cios) — zelfde tokens als de app */
+    @font-face { font-family: 'Industry'; src: url('fonts/IndustryTest-Book.otf') format('opentype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Industry'; src: url('fonts/IndustryTest-Demi.otf') format('opentype'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Industry'; src: url('fonts/IndustryTest-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
 
     :root {
-      --blauw:      #009FE3;
-      --blauw-dk:   #007BBF;
-      --blauw-lt:   #E0F5FD;
-      --zwart:      #0D0D0D;
-      --wit:        #FFFFFF;
-      --grijs-lt:   #F4F6F8;
-      --grijs:      #E8ECF0;
-      --tekst:      #1A1A1A;
-      --tekst-sub:  #4A5568;
-      --tekst-mute: #6B7280;
-      --groen:      #16A34A;
-      --rood:       #DC2626;
-      --oranje:     #EA580C;
-      --radius:     4px;
-      --radius-md:  8px;
-      --radius-lg:  12px;
-      --shadow:     0 2px 8px rgba(0,0,0,.10);
-      --shadow-lg:  0 8px 24px rgba(0,0,0,.14);
-
-      /* Industry met Barlow Condensed fallback */
-      --font-kop:   'Industry', 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      --font-body:  'Helvetica Neue', 'Barlow', Arial, sans-serif;
+      --accent: #009FE3;
+      --accent-strong: #0077AA;
+      --accent-strong-hover: #006F9F;
+      --accent-light: #E0F5FD;
+      --accent-text: #00547A;
+      --accent-border: #99D9F4;
+      --bg-page: #F1F5F9;
+      --bg-surface: #FFFFFF;
+      --bg-surface-alt: #F8FAFC;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #617187;
+      --border-default: #E2E8F0;
+      --border-light: #F1F5F9;
+      --border-focus: #0077AA;
+      --status-groen-bg: #DCFCE7; --status-groen-text: #15803D;
+      --status-rood-bg: #FEE2E2; --status-rood-text: #991B1B;
+      --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 8px rgba(15, 23, 42, 0.16), 0 2px 4px rgba(15, 23, 42, 0.10);
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-pill: 999px;
+      --transition-fast: 150ms ease;
+      --font: 'Industry', system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); background: var(--wit); color: var(--tekst); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-    h1, h2, h3, h4 { font-family: var(--font-kop); line-height: 1.1; letter-spacing: .01em; }
+    body { font-family: var(--font); font-size: 1rem; line-height: 1.5; color: var(--text-primary); background: var(--bg-page); -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent-strong); text-underline-offset: 3px; }
+    a:visited { color: #005A82; }
+    a:hover { color: var(--accent-strong-hover); }
+    ::selection { background: var(--accent-light); color: var(--text-primary); }
+    :focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+    h1, h2, h3 { font-weight: 600; line-height: 1.2; color: var(--text-primary); }
+    strong { font-weight: 600; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    .skip-link { position: absolute; top: -100px; left: 1rem; background: var(--blauw); color: #fff; padding: .5rem 1rem; border-radius: var(--radius); font-weight: 700; z-index: 100; }
-    .skip-link:focus { top: 1rem; }
+    .skip-link { position: absolute; left: 1rem; top: -100px; background: var(--accent-strong); color: #fff; padding: 0.6rem 1rem; border-radius: var(--radius-sm); z-index: 60; font-weight: 600; }
+    .skip-link:focus { top: 1rem; color: #fff; }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 50;
-      background: var(--wit);
-      border-bottom: 3px solid var(--blauw);
-      box-shadow: 0 2px 12px rgba(0,0,0,.10);
-    }
-    .nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; height: 68px; display: flex; align-items: center; gap: 1.5rem; }
-    .nav-logo img { height: 40px; display: block; }
-    .nav-divider { width: 1px; height: 32px; background: var(--grijs); }
-    .nav-subtitle { font-family: var(--font-kop); font-weight: 700; font-size: 1rem; color: var(--tekst); letter-spacing: .02em; text-transform: uppercase; }
-    .nav-links { display: flex; gap: 0.25rem; list-style: none; margin-left: auto; }
-    .nav-links a { font-family: var(--font-kop); font-weight: 600; font-size: 0.9rem; letter-spacing: .04em; text-transform: uppercase; color: var(--tekst-sub); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: var(--radius); transition: color .15s, background .15s; }
-    .nav-links a:hover { color: var(--blauw); background: var(--blauw-lt); }
-    .nav-links a:focus-visible { outline: 2px solid var(--blauw); outline-offset: 2px; }
-    .nav-version { background: var(--blauw); color: #fff; font-family: var(--font-kop); font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; white-space: nowrap; }
-    @media (max-width: 640px) { .nav-links { display: none; } .nav-subtitle { display: none; } }
-
-    /* ── BUTTONS ── */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: var(--font-kop); font-weight: 700; font-size: 1rem; letter-spacing: .04em; text-transform: uppercase; padding: 0.85rem 1.75rem; border-radius: var(--radius); border: none; cursor: pointer; text-decoration: none; transition: background .15s, transform .1s, box-shadow .15s; min-height: 52px; }
-    .btn:focus-visible { outline: 3px solid var(--wit); outline-offset: 3px; }
-    .btn:active { transform: translateY(1px); }
+    /* Knoppen */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm); font: 600 1rem/1.2 var(--font); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); }
     .btn svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .btn-blauw { background: var(--blauw); color: #fff; box-shadow: 0 4px 16px rgba(0,159,227,.4); }
-    .btn-blauw:hover { background: var(--blauw-dk); box-shadow: 0 6px 20px rgba(0,159,227,.5); transform: translateY(-1px); }
-    .btn-zwart { background: var(--zwart); color: #fff; }
-    .btn-zwart:hover { background: #333; transform: translateY(-1px); }
-    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.7); }
-    .btn-outline:hover { background: rgba(255,255,255,.12); border-color: #fff; }
-    .btn-ghost { background: transparent; color: var(--tekst-sub); border: 1.5px solid var(--grijs); }
-    .btn-ghost:hover { background: var(--grijs-lt); color: var(--tekst); }
-    .btn-lg { font-size: 1.1rem; padding: 1rem 2.25rem; min-height: 58px; }
+    .btn-primair, .btn-primair:visited { background: var(--accent-strong); color: #fff; box-shadow: var(--shadow-xs); }
+    .btn-primair:hover { background: var(--accent-strong-hover); color: #fff; }
+    .btn-secundair, .btn-secundair:visited { background: var(--bg-surface); color: var(--text-primary); border-color: var(--border-default); }
+    .btn-secundair:hover { border-color: var(--accent-strong); color: var(--accent-strong); }
+    .btn-tekst { background: none; border: 0; padding: 0; min-height: 44px; font: 600 1rem var(--font); color: var(--accent-strong); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .btn-tekst:hover { color: var(--accent-strong-hover); }
 
-    /* ── LAYOUT ── */
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
-    section { padding: 5rem 0; }
-    .section-label { font-family: var(--font-kop); font-size: 0.8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blauw); margin-bottom: 0.6rem; }
-    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.9rem; }
-    .section-sub { font-size: 1.05rem; color: var(--tekst-sub); max-width: 560px; line-height: 1.7; }
+    /* Nav */
+    .site-nav { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-default); }
+    .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 1rem; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-subtitle { font-weight: 600; color: var(--text-secondary); }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; margin-left: auto; }
+    .nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.75rem; color: var(--text-secondary); text-decoration: none; font-weight: 600; border-radius: var(--radius-sm); }
+    .nav-links a:hover { color: var(--accent-strong); background: var(--bg-surface-alt); }
+    .nav-version { background: var(--accent-light); color: var(--accent-text); font-size: 0.875rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: var(--radius-pill); white-space: nowrap; }
+    @media (max-width: 767px) { .nav-links, .nav-subtitle { display: none; } .nav-version { margin-left: auto; } }
 
-    /* ── HERO ── */
-    .hero { background: var(--zwart); position: relative; padding: 5.5rem 0 7rem; overflow: hidden; }
-    /* diagonale achtergrond rechts in CIOS blauw */
-    .hero::before {
-      content: '';
-      position: absolute; top: 0; right: 0; bottom: 0;
-      width: 55%;
-      background: var(--blauw);
-      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
-    }
-    .hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
-    @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; } .hero::before { display: none; } .hero { background: var(--blauw); } }
-
-    .hero-logo { margin-bottom: 2rem; }
-    .hero-logo img { height: 56px; }
-
-    .hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 1.25rem; line-height: 1.05; }
-    .hero h1 span { color: var(--blauw); display: block; }
-    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.85); line-height: 1.75; margin-bottom: 2rem; max-width: 460px; }
+    /* Hero */
+    .hero { position: relative; overflow: hidden; background: radial-gradient(ellipse at 85% 0%, rgba(0,159,227,0.14) 0%, transparent 55%), var(--bg-page); padding: 4rem 0 3.5rem; }
+    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; }
+    .hero-sub { font-size: 1.125rem; color: var(--text-secondary); max-width: 34rem; margin-bottom: 1.75rem; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .hero-note { margin-top: 1.25rem; font-size: 0.85rem; color: rgba(255,255,255,.55); display: flex; align-items: center; gap: 0.4rem; }
-    .hero-note svg { width: 14px; height: 14px; }
+    .hero-feiten { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 1.5rem; list-style: none; color: var(--text-secondary); }
+    .hero-feiten li { display: flex; align-items: center; gap: 0.4rem; }
+    .hero-feiten svg { width: 18px; height: 18px; color: var(--status-groen-text); }
+    .app-window { background: var(--bg-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-default); overflow: hidden; }
+    .app-window-bar { display: flex; gap: 6px; padding: 10px 12px; background: var(--bg-surface-alt); border-bottom: 1px solid var(--border-default); }
+    .app-window-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--border-default); }
+    @media (prefers-reduced-motion: no-preference) {
+      .app-window { animation: binnenkomst 400ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+      @keyframes binnenkomst { from { opacity: 0.4; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    }
+    @media (max-width: 1023px) { .hero-inner { grid-template-columns: 1fr; } .hero-visual { max-width: 560px; } }
+    @media (max-width: 767px) { .hero { padding: 2.5rem 0 2rem; } }
 
-    /* screenshot rechts */
-    .hero-visual { display: flex; justify-content: center; align-items: center; }
-    @media (max-width: 768px) { .hero-visual { display: none; } }
-    .app-window { width: 100%; max-width: 500px; border-radius: 10px; overflow: hidden; box-shadow: 0 28px 72px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.12); transform: perspective(1200px) rotateY(-4deg) rotateX(2deg); transition: transform .4s ease, box-shadow .4s ease; }
-    .app-window:hover { transform: perspective(1200px) rotateY(-1deg) rotateX(0.5deg); box-shadow: 0 36px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.18); }
-    .app-window-bar { background: #252525; padding: 10px 14px; display: flex; align-items: center; gap: 7px; }
-    .app-window-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .app-window-dot-r { background: #FF5F57; }
-    .app-window-dot-y { background: #FFBD2E; }
-    .app-window-dot-g { background: #28C840; }
-    .app-window-screenshot { display: block; width: 100%; height: auto; }
+    /* Secties */
+    section { padding: 4rem 0; }
+    .sectie-wit { background: var(--bg-surface); }
+    .sectie-kop { max-width: 44rem; margin-bottom: 2rem; }
+    .sectie-kop h2 { font-size: clamp(1.625rem, 3vw, 2.125rem); margin-bottom: 0.5rem; }
+    .sectie-kop p { color: var(--text-secondary); font-size: 1.0625rem; }
+    @media (max-width: 767px) { section { padding: 2.75rem 0; } }
 
-    /* ── DIAGONAAL SCHEIDINGSVLAK ── */
-    .divider-down { display: block; line-height: 0; }
-    .divider-down svg { display: block; width: 100%; }
+    /* Installeren */
+    .mobiel-blok { display: none; background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem; }
+    .mobiel-blok h3 { font-size: 1.125rem; margin-bottom: 0.25rem; color: var(--accent-text); }
+    .mobiel-blok p { color: var(--accent-text); margin-bottom: 0.75rem; }
+    .mobiel-blok .acties { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    html.is-mobiel .mobiel-blok { display: block; }
 
-    /* ── TRUST BAR ── */
-    .trust-bar { background: var(--zwart); padding: 1.5rem 0; }
-    .trust-inner { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; }
-    .trust-item { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-kop); font-size: 0.95rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.85); }
-    .trust-item svg { width: 18px; height: 18px; color: var(--blauw); }
+    .os-keuze-label { font-weight: 600; margin-bottom: 0.75rem; display: block; }
+    .os-keuze { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 0.5rem; }
+    .os-knop { display: flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 56px; padding: 0.75rem 1rem; background: var(--bg-surface); border: 2px solid var(--border-default); border-radius: var(--radius-md); font: 600 1.0625rem var(--font); color: var(--text-primary); cursor: pointer; transition: border-color var(--transition-fast), background-color var(--transition-fast); }
+    .os-knop svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .os-knop:hover { border-color: var(--accent-border); }
+    .os-knop[aria-pressed="true"] { border-color: var(--accent-strong); background: var(--accent-light); color: var(--accent-text); }
+    .mac-hulp { color: var(--text-secondary); margin-bottom: 2rem; }
+    .kies-eerst { display: none; color: var(--text-secondary); padding: 1.25rem; border: 1px dashed var(--border-default); border-radius: var(--radius-md); }
+    html:not(.js) .os-keuze, html:not(.js) .os-keuze-label { display: none; }
+    html.js.geen-keuze .kies-eerst { display: block; }
+    @media (max-width: 767px) { .os-keuze { grid-template-columns: 1fr; } .os-knop { min-height: 48px; justify-content: flex-start; } }
 
-    /* ── FEATURES ── */
-    .features { background: var(--grijs-lt); }
-    .features .section-title { color: var(--zwart); }
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
-    @media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
-    @media (min-width: 769px) and (max-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    .os-paneel { margin-top: 1rem; }
+    .os-paneel + .os-paneel { margin-top: 3rem; }
+    html.js .os-paneel { display: none; }
+    html.js .os-paneel.actief { display: block; margin-top: 1rem; }
+    .paneel-kop { font-size: 1.375rem; margin-bottom: 0.25rem; }
+    .paneel-duur { color: var(--text-secondary); margin-bottom: 1.5rem; }
 
-    .feature-card { background: var(--wit); border-top: 4px solid var(--blauw); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 1.75rem; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s; }
-    .feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-    .feature-icon { width: 48px; height: 48px; background: var(--blauw); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; }
-    .feature-icon svg { width: 24px; height: 24px; color: #fff; }
-    .feature-card h3 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; margin-bottom: 0.6rem; }
-    .feature-card p { font-size: 0.92rem; color: var(--tekst-sub); line-height: 1.65; }
+    .stappen { list-style: none; counter-reset: stap; max-width: 44rem; }
+    .stap { position: relative; counter-increment: stap; padding: 0 0 2rem 3.25rem; }
+    .stap::before { content: counter(stap); position: absolute; left: 0; top: 0; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--bg-surface); border: 2px solid var(--accent-strong); color: var(--accent-strong); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .stap:not(:last-child)::after { content: ""; position: absolute; left: calc(1.125rem - 1px); top: 2.5rem; bottom: 0.5rem; width: 2px; background: var(--border-default); }
+    .stap h3 { font-size: 1.1875rem; margin: 0.25rem 0 0.4rem; }
+    .stap p { color: var(--text-secondary); margin-bottom: 0.6rem; max-width: 40rem; }
+    .stap p strong { color: var(--text-primary); }
+    .stap .btn-primair { margin: 0.25rem 0 0.5rem; }
+    .stap-hulp { font-size: 0.9375rem; color: var(--text-secondary); }
 
-    /* ── DOWNLOAD ── */
-    .download { background: var(--wit); }
-    .download .section-title { color: var(--zwart); }
-    .download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
-    @media (max-width: 900px) { .download-grid { grid-template-columns: 1fr; max-width: 440px; } }
+    .gerust { display: flex; gap: 0.75rem; background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--radius-md); padding: 1rem 1.125rem; margin: 0.25rem 0 0.9rem; max-width: 40rem; }
+    .gerust svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--accent-text); margin-top: 1px; }
+    .gerust p { color: var(--accent-text); margin: 0; }
+    .gerust p strong { color: var(--accent-text); }
 
-    .dl-card { background: var(--grijs-lt); border: 2px solid var(--grijs); border-radius: var(--radius-md); padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color .2s, box-shadow .2s, transform .2s; }
-    .dl-card:hover { border-color: var(--blauw); box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-    .dl-card-icon { width: 52px; height: 52px; }
-    .dl-card-icon svg { width: 100%; height: 100%; }
-    .dl-card-platform { font-family: var(--font-kop); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blauw); }
-    .dl-card h3 { font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; margin-top: 0.1rem; }
-    .dl-card-desc { font-size: 0.88rem; color: var(--tekst-sub); line-height: 1.55; flex: 1; }
-    .dl-card-hint { background: #FFF7ED; border-left: 3px solid var(--oranje); border-radius: 0 var(--radius) var(--radius) 0; padding: 0.6rem 0.85rem; font-size: 0.8rem; color: #7C2D12; line-height: 1.5; }
-    .dl-card-hint strong { color: #9A3412; }
+    .tak { border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-surface-alt); margin: 0.5rem 0 0.75rem; max-width: 40rem; }
+    .tak summary { cursor: pointer; padding: 0.875rem 1rem; font-weight: 600; min-height: 44px; list-style-position: inside; }
+    .tak[open] summary { border-bottom: 1px solid var(--border-default); }
+    .tak-inhoud { padding: 1rem; }
+    .tak-inhoud p { margin-bottom: 0.75rem; }
+    .code-regel { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0.5rem; margin: 0.5rem 0 0.75rem; }
+    .code-regel code { flex: 1 1 18rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9375rem; background: var(--text-primary); color: #F1F5F9; padding: 0.75rem 0.9rem; border-radius: var(--radius-sm); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .gekopieerd { color: var(--status-groen-text); font-weight: 600; min-height: 1.5rem; }
 
-    /* ── INSTALL ── */
-    .install { background: var(--zwart); color: #fff; }
-    .install .section-label { color: var(--blauw); }
-    .install .section-title { color: #fff; }
-    .install .section-sub { color: rgba(255,255,255,.7); }
-    .install-platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
-    @media (max-width: 768px) { .install-platforms { grid-template-columns: 1fr; } }
+    .klaar { background: var(--status-groen-bg); border-radius: var(--radius-md); padding: 1rem 1.125rem; max-width: 40rem; }
+    .klaar p { color: var(--status-groen-text); margin: 0; }
+    .klaar p strong { color: var(--status-groen-text); }
 
-    .install-block { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-top: 3px solid var(--blauw); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: 2rem; }
-    .install-platform-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,.1); }
-    .install-platform-header svg { width: 26px; height: 26px; flex-shrink: 0; }
-    .install-platform-header h3 { font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #fff; }
+    .contact-regel { margin-top: 2.5rem; color: var(--text-secondary); max-width: 44rem; }
 
-    .steps { display: flex; flex-direction: column; }
-    .step { display: flex; gap: 1rem; position: relative; }
-    .step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 36px; width: 2px; bottom: 0; background: rgba(255,255,255,.15); }
-    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--blauw); color: #fff; font-family: var(--font-kop); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
-    .step-body { padding-top: 6px; padding-bottom: 1.5rem; }
-    .step-body strong { display: block; font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
-    .step-body p { font-size: 0.88rem; color: rgba(255,255,255,.65); line-height: 1.6; }
-    .step-note { margin-top: 0.5rem; background: rgba(0,159,227,.15); border-left: 3px solid var(--blauw); padding: 0.5rem 0.75rem; font-size: 0.84rem; color: #BAE6FD; line-height: 1.5; }
-    .step-note strong { color: #fff; }
+    /* Functies */
+    .kaarten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .kaart { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 1.5rem; }
+    .kaart svg { width: 28px; height: 28px; color: var(--accent-strong); margin-bottom: 0.9rem; }
+    .kaart h3 { font-size: 1.125rem; margin-bottom: 0.4rem; }
+    .kaart p { color: var(--text-secondary); }
+    @media (max-width: 1023px) { .kaarten { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 599px) { .kaarten { grid-template-columns: 1fr; } }
 
-    /* ── DOET / DOET NIET ── */
-    .does { background: var(--grijs-lt); }
-    .does .section-title { color: var(--zwart); }
-    .does-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
-    @media (max-width: 680px) { .does-grid { grid-template-columns: 1fr; } }
+    /* Wel en niet */
+    .wel-niet { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .wel-niet-blok h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1875rem; margin-bottom: 0.75rem; }
+    .wel-niet-blok h3 svg { width: 22px; height: 22px; }
+    .wel h3 svg { color: var(--status-groen-text); }
+    .niet h3 svg { color: var(--status-rood-text); }
+    .wel-niet-blok ul { list-style: none; }
+    .wel-niet-blok li { padding: 0.55rem 0; border-top: 1px solid var(--border-default); color: var(--text-secondary); }
+    @media (max-width: 767px) { .wel-niet { grid-template-columns: 1fr; } }
 
-    .does-box { background: var(--wit); border-radius: var(--radius-md); padding: 1.75rem; box-shadow: var(--shadow); }
-    .does-box.yes { border-top: 4px solid var(--groen); }
-    .does-box.no  { border-top: 4px solid var(--rood); }
-    .does-box h3 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--grijs); }
-    .does-box h3 svg { width: 18px; height: 18px; }
-    .does-box.yes h3 { color: var(--groen); }
-    .does-box.no  h3 { color: var(--rood); }
-    .does-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-    .does-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; color: var(--tekst-sub); line-height: 1.5; }
-    .does-list li svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; }
-    .yes .does-list li svg { color: var(--groen); }
-    .no  .does-list li svg { color: var(--rood); }
+    /* Updates (inhoud bijgewerkt door scripts/update-landing-page.mjs) */
+    .updates-list { display: grid; gap: 0.75rem; max-width: 52rem; }
+    .update-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 1rem 1.25rem; }
+    .update-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
+    .update-version { font-weight: 600; }
+    .update-date { color: var(--text-secondary); }
+    .update-new { background: var(--status-groen-bg); color: var(--status-groen-text); font-size: 0.875rem; font-weight: 600; padding: 0.15rem 0.6rem; border-radius: var(--radius-pill); }
+    .update-items { margin-top: 0.6rem; display: grid; gap: 0.4rem; }
+    .update-item { color: var(--text-secondary); }
+    .update-chip { display: inline-block; font-size: 0.8125rem; font-weight: 600; padding: 0.05rem 0.5rem; border-radius: var(--radius-pill); margin-right: 0.5rem; vertical-align: 1px; }
+    .chip-new { background: var(--accent-light); color: var(--accent-text); }
+    .chip-changed { background: var(--bg-page); color: var(--text-secondary); }
+    .more-releases { margin-top: 1.25rem; }
 
-    /* ── UPDATES ── */
-    .updates { background: var(--wit); }
-    .updates .section-title { color: var(--zwart); }
-    .updates-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
-    .update-card { background: var(--grijs-lt); border-left: 4px solid var(--blauw); border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1.5rem 1.75rem; box-shadow: var(--shadow); }
-    .update-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
-    .update-version { font-family: var(--font-kop); font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
-    .update-date { font-size: 0.85rem; color: var(--tekst-mute); }
-    .update-new { margin-left: auto; background: var(--blauw); color: #fff; font-family: var(--font-kop); font-size: 0.7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; }
-    .update-items { display: flex; flex-direction: column; gap: 0.5rem; }
-    .update-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: var(--tekst-sub); }
-    .update-chip { flex-shrink: 0; font-family: var(--font-kop); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 7px; border-radius: 3px; margin-top: 2px; }
-    .chip-new     { background: #DCFCE7; color: #15803D; }
-    .chip-changed { background: #FEF3C7; color: #92400E; }
-    .more-releases { text-align: center; margin-top: 1.5rem; }
+    /* Footer */
+    footer { background: var(--bg-surface); border-top: 1px solid var(--border-default); padding: 2.5rem 0; }
+    footer .container { display: grid; gap: 0.5rem; }
+    footer img { height: 36px; width: auto; margin-bottom: 0.5rem; }
+    footer p { color: var(--text-secondary); }
+    .footer-legal { font-size: 0.875rem; color: var(--text-muted); }
 
-    /* ── FOOTER ── */
-    footer { background: var(--zwart); color: rgba(255,255,255,.6); padding: 3rem 1.5rem 2rem; }
-    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
-    .footer-logo img { height: 44px; filter: brightness(0) invert(1); opacity: .9; }
-    .footer-divider { width: 48px; height: 3px; background: var(--blauw); border-radius: 2px; }
-    footer p { font-size: 0.88rem; line-height: 1.7; }
-    footer a { color: var(--blauw); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    footer strong { color: rgba(255,255,255,.9); }
-    .footer-legal { font-size: 0.78rem; color: rgba(255,255,255,.35); margin-top: 0.5rem; }
-
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } html { scroll-behavior: auto; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } html { scroll-behavior: auto; } }
   </style>
+  <script>
+    // Vóór rendering: JS-klasse + mobiele detectie, zodat panelen niet knipperen.
+    document.documentElement.classList.add('js');
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches && window.innerWidth < 1024) {
+      document.documentElement.classList.add('is-mobiel');
+    }
+  </script>
 </head>
 <body>
 
-<a href="#main" class="skip-link">Ga naar inhoud</a>
+<a href="#installatie" class="skip-link">Direct naar installeren</a>
 
-<!-- NAV -->
-<nav aria-label="Hoofdnavigatie">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="CIOS Zuidwest-Nederland — startpagina">
-      <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland">
-    </a>
-    <div class="nav-divider" aria-hidden="true"></div>
-    <span class="nav-subtitle">Mentordashboard</span>
-    <ul class="nav-links" role="list">
-      <li><a href="#download">Download</a></li>
-      <li><a href="#installatie">Installeren</a></li>
-      <li><a href="#functies">Functies</a></li>
-      <li><a href="#updates">Updates</a></li>
-    </ul>
-    <span class="nav-version">v2.11.4</span>
-  </div>
-</nav>
+<header>
+  <nav class="site-nav" aria-label="Hoofdnavigatie">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="CIOS Zuidwest-Nederland, naar boven">
+        <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland" width="120" height="36">
+      </a>
+      <span class="nav-subtitle">Mentordashboard</span>
+      <ul class="nav-links" role="list">
+        <li><a href="#installatie">Installeren</a></li>
+        <li><a href="#functies">Functies</a></li>
+        <li><a href="#updates">Updates</a></li>
+      </ul>
+      <span class="nav-version">v2.11.4</span>
+    </div>
+  </nav>
+</header>
 
-<!-- HERO -->
-<header class="hero" id="main">
-  <div class="hero-inner">
+<main id="main">
+
+<div class="hero">
+  <div class="container hero-inner">
     <div class="hero-text">
-      <div class="hero-logo">
-        <img src="logo-cios-wit.png" alt="CIOS Zuidwest-Nederland" style="filter:brightness(0) invert(1);height:52px;">
-      </div>
-      <h1>
-        Altijd in één oogopslag zien
-        <span>hoe het met je leerlingen gaat</span>
-      </h1>
-      <p class="hero-sub">Je importeert elk kwartaal een overzicht vanuit Cumlaude. Het programma laat daarna meteen zien welke leerlingen extra aandacht nodig hebben — zonder dat je door eindeloze lijsten hoeft te zoeken.</p>
+      <h1>Zie in één oogopslag hoe het met je leerlingen gaat</h1>
+      <p class="hero-sub">Importeer het overzicht uit Cumlaude. Mentordashboard laat meteen zien welke leerlingen extra aandacht nodig hebben. Het werkt zonder internet en je gegevens blijven op je eigen computer.</p>
       <div class="hero-actions">
-        <a href="#download" class="btn btn-blauw btn-lg">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download het programma
+        <a href="#installatie" class="btn btn-primair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          Installeren
         </a>
-        <a href="#functies" class="btn btn-outline btn-lg">Wat kan het?</a>
+        <a href="#functies" class="btn btn-secundair">Wat kan het?</a>
       </div>
-      <p class="hero-note">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Gratis · Geen account nodig · Gegevens blijven op jouw computer
-      </p>
+      <ul class="hero-feiten" role="list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Gratis</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Geen account nodig</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Werkt zonder internet</li>
+      </ul>
     </div>
     <div class="hero-visual">
       <div class="app-window">
-        <div class="app-window-bar" aria-hidden="true">
-          <div class="app-window-dot app-window-dot-r"></div>
-          <div class="app-window-dot app-window-dot-y"></div>
-          <div class="app-window-dot app-window-dot-g"></div>
-        </div>
-        <img class="app-window-screenshot" src="screenshot-dashboard.png" alt="Het klasoverzicht van het Mentordashboard CIOS, met leerlingkaarten in groen, oranje en rood op basis van hun voortgang." width="640" height="400">
+        <div class="app-window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+        <img src="screenshot-dashboard.png" alt="Het klasoverzicht van Mentordashboard CIOS, met leerlingkaarten in groen, oranje en rood op basis van hun voortgang." width="1280" height="720">
       </div>
-    </div>
-  </div>
-</header>
-
-<!-- diagonaal vlak naar trust bar -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" style="height:48px;background:#0D0D0D;">
-    <polygon points="0,0 1440,0 1440,48 0,0" fill="#0D0D0D"/>
-    <polygon points="0,48 1440,48 1440,0" fill="#0D0D0D"/>
-  </svg>
-</span>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-inner">
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Helemaal gratis
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Geen account nodig
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Werkt zonder internet
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      Data veilig op jouw computer
     </div>
   </div>
 </div>
 
-<!-- diagonaal vlak naar features -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#F4F6F8;">
-    <polygon points="0,0 1440,52 0,52" fill="#0D0D0D"/>
-  </svg>
-</span>
-
-<!-- FEATURES -->
-<section class="features" id="functies">
+<section class="sectie-wit" id="installatie" aria-labelledby="installatie-kop">
+  <span id="download"></span>
   <div class="container">
-    <p class="section-label">Wat kan het?</p>
-    <h2 class="section-title">Gemaakt voor mentoren,<br>niet voor IT'ers</h2>
-    <p class="section-sub">Je hoeft niets te begrijpen van techniek. Het programma doet het zware werk — jij ziet alleen wat belangrijk is.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <h3>Rood, oranje of groen per leerling</h3>
-        <p>Je ziet in één oogopslag wie aandacht nodig heeft. Rood = ingrijpen. Oranje = in de gaten houden. Groen = prima bezig.</p>
+    <div class="sectie-kop">
+      <h2 id="installatie-kop">Installeren</h2>
+      <p>Kies je computer. Je ziet dan precies wat je te zien krijgt en waar je klikt. Het duurt ongeveer twee minuten.</p>
+    </div>
+
+    <div class="mobiel-blok" role="note">
+      <h3>Installeren kan alleen op een computer</h3>
+      <p>Mentordashboard werkt op een Windows-pc of een Mac, niet op een telefoon of tablet. Stuur deze pagina naar jezelf en open hem later op je computer.</p>
+      <div class="acties">
+        <a class="btn btn-primair" id="mail-link" href="mailto:?subject=Mentordashboard%20installeren&amp;body=Open%20deze%20link%20op%20je%20computer%3A%20https%3A%2F%2Funframed7175.github.io%2Fciosmentorendashboard%2F%23installatie">Stuur deze link naar mezelf</a>
+        <button type="button" class="btn btn-secundair" id="kopieer-link">Link kopiëren</button>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>PDF van Cumlaude importeren</h3>
-        <p>Download het beoordelingsoverzicht uit Cumlaude, sleep het in het programma en alles staat klaar. Klaar in een minuut.</p>
+      <p class="gekopieerd" id="link-status" aria-live="polite"></p>
+    </div>
+
+    <span class="os-keuze-label" id="os-keuze-label">Kies je computer</span>
+    <div class="os-keuze" role="group" aria-labelledby="os-keuze-label">
+      <button type="button" class="os-knop" data-os="windows" aria-pressed="false" aria-controls="paneel-windows">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.16l-9 1.65V12h9zM3 13h6v6.57l-6-1.32V13zm17 0h-9v5.19l9 1.65V13z"/></svg>
+        Windows
+      </button>
+      <button type="button" class="os-knop" data-os="mac-apple" aria-pressed="false" aria-controls="paneel-mac-apple">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Mac met Apple chip
+      </button>
+      <button type="button" class="os-knop" data-os="mac-intel" aria-pressed="false" aria-controls="paneel-mac-intel">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Mac met Intel chip
+      </button>
+    </div>
+    <p class="mac-hulp">Welke Mac heb je? Klik linksboven op het Apple-logo en kies <strong>Over deze Mac</strong>. Staat er "Apple M…", kies dan Apple chip. Staat er "Intel", kies dan Intel chip.</p>
+
+    <p class="kies-eerst">Kies hierboven je computer om de stappen te zien.</p>
+
+    <div id="stappen-regio" aria-live="polite">
+
+    <!-- WINDOWS -->
+    <div class="os-paneel" id="paneel-windows" data-os-panel="windows" tabindex="-1">
+      <h3 class="paneel-kop">Stappen voor Windows</h3>
+      <p class="paneel-duur">Voor Windows 10 en 11. Je hebt geen beheerdersrechten nodig.</p>
+      <ol class="stappen">
+        <li class="stap">
+          <h3>Download het programma</h3>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Omdat dit programma niet uit een app-winkel komt, waarschuwen je browser en je computer straks één keer. Dat is normaal. De stappen hieronder laten precies zien wat je ziet en waar je klikt.</p></div>
+          <a class="btn btn-primair" data-download="windows" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_x64-setup.exe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download voor Windows
+          </a>
+          <p class="stap-hulp">Geen bestand gekregen? <button type="button" class="btn-tekst" data-download-retry="windows">Probeer opnieuw</button></p>
+        </li>
+        <li class="stap">
+          <h3>Bewaar het bestand als je browser dat vraagt</h3>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Je browser meldt misschien dat het bestand "niet vaak gedownload" wordt. Dat zegt alleen dat weinig mensen het hebben gedownload, niet dat het gevaarlijk is.</p></div>
+          <p><strong>Edge:</strong> klik op de drie puntjes (…) naast de melding en kies <strong>Behouden</strong>. Klik daarna op <strong>Meer weergeven</strong> en dan op <strong>Toch behouden</strong>.</p>
+          <p><strong>Chrome:</strong> klik op <strong>Behouden</strong>.</p>
+        </li>
+        <li class="stap">
+          <h3>Open het bestand en geef Windows toestemming</h3>
+          <p>Open je map <strong>Downloads</strong> en dubbelklik op het bestand dat eindigt op <strong>setup.exe</strong>.</p>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Nu toont Windows de melding "Windows heeft uw pc beschermd". Die zie je bij programma's die niet via de Microsoft Store komen. Mentordashboard draait alleen op jouw computer en stuurt geen gegevens weg.</p></div>
+          <p>Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>.</p>
+          <p class="stap-hulp">Deze melding zie je normaal alleen bij de eerste installatie.</p>
+        </li>
+        <li class="stap">
+          <h3>Installeer het programma</h3>
+          <p>Klik op <strong>Volgende</strong> en daarna op <strong>Installeren</strong>. Na een paar seconden is het klaar.</p>
+        </li>
+        <li class="stap">
+          <h3>Klaar</h3>
+          <div class="klaar"><p>Open <strong>Mentordashboard CIOS</strong> via het Startmenu. De wizard helpt je je eerste klas te importeren.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- MAC APPLE CHIP -->
+    <div class="os-paneel" id="paneel-mac-apple" data-os-panel="mac-apple" tabindex="-1">
+      <h3 class="paneel-kop">Stappen voor een Mac met Apple chip</h3>
+      <p class="paneel-duur">Voor Macs met een M1, M2, M3 of M4.</p>
+      <ol class="stappen">
+        <li class="stap">
+          <h3>Download het programma</h3>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Omdat dit programma niet uit een app-winkel komt, waarschuwt je Mac straks één keer. Dat is normaal. De stappen hieronder laten precies zien wat je ziet en waar je klikt.</p></div>
+          <a class="btn btn-primair" data-download="mac-apple" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_aarch64.dmg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download voor Mac met Apple chip
+          </a>
+          <p class="stap-hulp">Geen bestand gekregen? <button type="button" class="btn-tekst" data-download-retry="mac-apple">Probeer opnieuw</button></p>
+        </li>
+        <li class="stap">
+          <h3>Bewaar het bestand als je browser dat vraagt</h3>
+          <p>Gebruik je Chrome en meldt die dat het bestand "niet vaak gedownload" wordt? Klik op <strong>Behouden</strong>. In Safari krijg je meestal geen melding.</p>
+        </li>
+        <li class="stap">
+          <h3>Zet het programma in je map Programma's</h3>
+          <p>Open je map <strong>Downloads</strong> en dubbelklik op het bestand dat eindigt op <strong>.dmg</strong>. Sleep in het venster dat opent het Mentordashboard-icoon naar de map <strong>Programma's</strong>.</p>
+        </li>
+        <li class="stap">
+          <h3>Open het programma en geef je Mac toestemming</h3>
+          <p>Dubbelklik op Mentordashboard in je map Programma's.</p>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Je Mac meldt dat Apple het programma niet kan controleren. Dat komt doordat het niet uit de App Store komt. Mentordashboard draait alleen op jouw Mac en stuurt geen gegevens weg.</p></div>
+          <p>Klik op <strong>Klaar</strong>. Open <strong>Systeeminstellingen</strong> → <strong>Privacy en beveiliging</strong>, scroll naar beneden en klik op <strong>Open toch</strong>. Bevestig met je wachtwoord of Touch ID en klik nog één keer op <strong>Open</strong>.</p>
+          <p class="stap-hulp">Deze melding zie je normaal alleen bij de eerste installatie.</p>
+          <details class="tak">
+            <summary>Zie je "Mentordashboard CIOS is beschadigd"?</summary>
+            <div class="tak-inhoud">
+              <p>Het programma is niet kapot; macOS blokkeert het strenger. Open <strong>Terminal</strong> (druk op Cmd + spatie en typ "Terminal"), plak de regel hieronder, druk op Enter en open het programma opnieuw.</p>
+              <div class="code-regel">
+                <code>xattr -cr "/Applications/Mentordashboard CIOS.app"</code>
+                <button type="button" class="btn btn-secundair" data-kopieer='xattr -cr "/Applications/Mentordashboard CIOS.app"'>Kopieer</button>
+              </div>
+              <p class="gekopieerd" aria-live="polite"></p>
+            </div>
+          </details>
+          <p class="stap-hulp">Werkt het niet? Misschien heb je de andere Mac-versie nodig. <button type="button" class="btn-tekst" data-switch-os="mac-intel">Naar Mac met Intel chip</button></p>
+        </li>
+        <li class="stap">
+          <h3>Klaar</h3>
+          <div class="klaar"><p>Open <strong>Mentordashboard CIOS</strong>. De wizard helpt je je eerste klas te importeren.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- MAC INTEL -->
+    <div class="os-paneel" id="paneel-mac-intel" data-os-panel="mac-intel" tabindex="-1">
+      <h3 class="paneel-kop">Stappen voor een Mac met Intel chip</h3>
+      <p class="paneel-duur">Voor oudere Macs met een Intel-processor.</p>
+      <ol class="stappen">
+        <li class="stap">
+          <h3>Download het programma</h3>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Omdat dit programma niet uit een app-winkel komt, waarschuwt je Mac straks één keer. Dat is normaal. De stappen hieronder laten precies zien wat je ziet en waar je klikt.</p></div>
+          <a class="btn btn-primair" data-download="mac-intel" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_x64.dmg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download voor Mac met Intel chip
+          </a>
+          <p class="stap-hulp">Geen bestand gekregen? <button type="button" class="btn-tekst" data-download-retry="mac-intel">Probeer opnieuw</button></p>
+        </li>
+        <li class="stap">
+          <h3>Bewaar het bestand als je browser dat vraagt</h3>
+          <p>Gebruik je Chrome en meldt die dat het bestand "niet vaak gedownload" wordt? Klik op <strong>Behouden</strong>. In Safari krijg je meestal geen melding.</p>
+        </li>
+        <li class="stap">
+          <h3>Zet het programma in je map Programma's</h3>
+          <p>Open je map <strong>Downloads</strong> en dubbelklik op het bestand dat eindigt op <strong>.dmg</strong>. Sleep in het venster dat opent het Mentordashboard-icoon naar de map <strong>Programma's</strong>.</p>
+        </li>
+        <li class="stap">
+          <h3>Open het programma en geef je Mac toestemming</h3>
+          <p>Dubbelklik op Mentordashboard in je map Programma's.</p>
+          <div class="gerust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Je Mac meldt dat Apple het programma niet kan controleren. Dat komt doordat het niet uit de App Store komt. Mentordashboard draait alleen op jouw Mac en stuurt geen gegevens weg.</p></div>
+          <p>Klik op <strong>Klaar</strong>. Open <strong>Systeeminstellingen</strong> → <strong>Privacy en beveiliging</strong>, scroll naar beneden en klik op <strong>Open toch</strong>. Bevestig met je wachtwoord of Touch ID en klik nog één keer op <strong>Open</strong>.</p>
+          <p class="stap-hulp">Deze melding zie je normaal alleen bij de eerste installatie.</p>
+          <details class="tak">
+            <summary>Zie je "Mentordashboard CIOS is beschadigd"?</summary>
+            <div class="tak-inhoud">
+              <p>Het programma is niet kapot; macOS blokkeert het strenger. Open <strong>Terminal</strong> (druk op Cmd + spatie en typ "Terminal"), plak de regel hieronder, druk op Enter en open het programma opnieuw.</p>
+              <div class="code-regel">
+                <code>xattr -cr "/Applications/Mentordashboard CIOS.app"</code>
+                <button type="button" class="btn btn-secundair" data-kopieer='xattr -cr "/Applications/Mentordashboard CIOS.app"'>Kopieer</button>
+              </div>
+              <p class="gekopieerd" aria-live="polite"></p>
+            </div>
+          </details>
+          <p class="stap-hulp">Werkt het niet? Misschien heb je de andere Mac-versie nodig. <button type="button" class="btn-tekst" data-switch-os="mac-apple">Naar Mac met Apple chip</button></p>
+        </li>
+        <li class="stap">
+          <h3>Klaar</h3>
+          <div class="klaar"><p>Open <strong>Mentordashboard CIOS</strong>. De wizard helpt je je eerste klas te importeren.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    </div>
+
+    <p class="contact-regel">Kom je er niet uit? Mail naar <a href="mailto:ralvarezstam@cioszuidwest.nl">ralvarezstam@cioszuidwest.nl</a>.</p>
+  </div>
+</section>
+
+<section id="functies" aria-labelledby="functies-kop">
+  <div class="container">
+    <div class="sectie-kop">
+      <h2 id="functies-kop">Wat kun je ermee?</h2>
+      <p>Je hoeft niets van techniek te weten. Het programma doet het zware werk; jij ziet wat belangrijk is.</p>
+    </div>
+    <div class="kaarten">
+      <div class="kaart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <h3>Klasoverzicht in één oogopslag</h3>
+        <p>Elke leerling krijgt groen, oranje of rood met een label erbij. Je ziet meteen wie aandacht nodig heeft.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
+      <div class="kaart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         <h3>Doorstroomprognose per leerling</h3>
-        <p>Het programma berekent automatisch of een leerling op weg is naar SBL, SBC of BJ2, of dat bijsturing nodig is.</p>
+        <p>Het programma berekent of een leerling op weg is naar SBL, SBC of BJ2, of dat bijsturen nodig is.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <h3>Niet ingeleverd en te laat in beeld</h3>
-        <p>Je ziet per leerling hoeveel producten niet zijn ingeleverd of te laat zijn ingeleverd. Zo mis je nooit een signaal.</p>
+      <div class="kaart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+        <h3>Verzuim en BPV bij elkaar</h3>
+        <p>Niet ingeleverd, te laat, verzuim en BPV-uren staan per leerling op één plek.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        </div>
-        <h3>Meerdere klassen bijhouden</h3>
-        <p>Je kunt meerdere klassen aanmaken en per klas leerlinggegevens opslaan. Handig als je mentor bent van meer dan één klas.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>Gegevens veilig opgeslagen</h3>
-        <p>Alle informatie staat versleuteld op jouw eigen computer. Er gaat niets naar het internet of naar een centrale server.</p>
+      <div class="kaart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3>Werkt offline, gegevens versleuteld</h3>
+        <p>Alles staat versleuteld op je eigen computer. Er gaat niets naar internet of naar een server.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- diagonaal vlak naar download -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#fff;">
-    <polygon points="0,0 1440,0 1440,52 0,0" fill="#F4F6F8"/>
-  </svg>
-</span>
-
-<!-- DOWNLOAD -->
-<section class="download" id="download">
+<section class="sectie-wit" id="wat-doet-het" aria-labelledby="wel-niet-kop">
   <div class="container">
-    <p class="section-label">Download</p>
-    <h2 class="section-title">Kies de versie die past<br>bij jouw computer</h2>
-    <p class="section-sub">Weet je niet welk type Mac je hebt? Klik linksboven op het Apple-logo en kies <strong>Over deze Mac</strong>.</p>
-    <div class="download-grid">
-
-      <div class="dl-card">
-        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="10" fill="#E0F5FD"/>
-          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#009FE3"/>
-          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#009FE3"/>
-        </svg>
-        <div>
-          <div class="dl-card-platform">macOS</div>
-          <h3>Mac — Apple chip</h3>
-        </div>
-        <p class="dl-card-desc">Voor Macs met een M1, M2, M3 of M4 processor. Bij <strong>Over deze Mac</strong> staat "Apple M…".</p>
-        <a class="btn btn-blauw" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_aarch64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Apple chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download .dmg
-        </a>
-      </div>
-
-      <div class="dl-card">
-        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="10" fill="#E0F5FD"/>
-          <path d="M35.2 15.5c1.6-2 2.7-4.8 2.4-7.5-2.4.1-5.2 1.6-6.9 3.6-1.5 1.7-2.8 4.5-2.4 7.2 2.6.1 5.3-1.4 6.9-3.3z" fill="#64748B"/>
-          <path d="M37.5 20c-3.8-.2-7 2.2-8.8 2.2-1.8 0-4.5-2.1-7.5-2-3.8.1-7.4 2.2-9.3 5.7-4 6.9-1 17.1 2.8 22.7 1.9 2.8 4.2 5.8 7.2 5.7 2.9-.1 4-1.9 7.5-1.9 3.5 0 4.5 1.9 7.5 1.8 3.1-.1 5-2.8 6.9-5.6 2.2-3.2 3.1-6.3 3.1-6.4-.1 0-6-2.3-6.1-9.2-.1-5.7 4.7-8.5 4.9-8.7-2.7-3.9-6.8-4.3-8.2-4.3z" fill="#64748B"/>
-        </svg>
-        <div>
-          <div class="dl-card-platform">macOS</div>
-          <h3>Mac — Intel chip</h3>
-        </div>
-        <p class="dl-card-desc">Voor oudere Macs met een Intel processor. Bij <strong>Over deze Mac</strong> staat "Intel Core…".</p>
-        <a class="btn btn-blauw" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_x64.dmg" style="width:100%;justify-content:center;" aria-label="Download voor Mac met Intel chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download .dmg
-        </a>
-      </div>
-
-      <div class="dl-card">
-        <svg class="dl-card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-          <rect width="56" height="56" rx="10" fill="#EFF6FF"/>
-          <rect x="10" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
-          <rect x="30" y="10" width="16" height="16" rx="2" fill="#3B82F6"/>
-          <rect x="10" y="30" width="16" height="16" rx="2" fill="#3B82F6"/>
-          <rect x="30" y="30" width="16" height="16" rx="2" fill="#3B82F6"/>
-        </svg>
-        <div>
-          <div class="dl-card-platform">Windows</div>
-          <h3>Windows 10 of 11</h3>
-        </div>
-        <p class="dl-card-desc">Voor computers met Windows 10 of Windows 11. Werkt op alle gewone Windows-laptops en desktops.</p>
-        <div class="dl-card-hint"><strong>Let op:</strong> Windows vraagt mogelijk om bevestiging. Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>.</div>
-        <a class="btn btn-zwart" href="https://github.com/Unframed7175/mentordashboard-cios/releases/download/v2.11.4/Mentordashboard.CIOS_2.11.4_x64-setup.exe" style="width:100%;justify-content:center;" aria-label="Download voor Windows">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download .exe
-        </a>
-      </div>
-
+    <div class="sectie-kop">
+      <h2 id="wel-niet-kop">Wat kan het wel, en wat niet?</h2>
+      <p>Zo weet je wat je kunt verwachten voordat je het installeert.</p>
     </div>
-  </div>
-</section>
-
-<!-- diagonaal vlak naar installatie -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#0D0D0D;">
-    <polygon points="0,0 1440,0 0,52" fill="#FFFFFF"/>
-  </svg>
-</span>
-
-<!-- INSTALLATIE -->
-<section class="install" id="installatie">
-  <div class="container">
-    <p class="section-label">Installeren</p>
-    <h2 class="section-title">Stap voor stap<br>het programma installeren</h2>
-    <p class="section-sub">Volg de stappen hieronder voor jouw computer. Het duurt gemiddeld twee minuten.</p>
-    <div class="install-platforms">
-
-      <div class="install-block">
-        <div class="install-platform-header">
-          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#009FE3" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <h3>Installeren op een Mac</h3>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num" aria-hidden="true">1</div>
-            <div class="step-body">
-              <strong>Download het juiste bestand hierboven</strong>
-              <p>Weet je niet welke versie? Klik linksboven op het Apple-logo → <em>Over deze Mac</em>. Staat er "Apple M…"? Kies Apple chip. Staat er "Intel"? Kies Intel chip.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">2</div>
-            <div class="step-body">
-              <strong>Open het gedownloade bestand</strong>
-              <p>Ga naar je <em>Downloads</em>-map en dubbelklik op het bestand dat eindigt op <em>.dmg</em>.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">3</div>
-            <div class="step-body">
-              <strong>Sleep het naar Programma's</strong>
-              <p>Er opent een venster. Sleep het Mentordashboard-icoon naar de map <em>Programma's</em> die je daar ziet staan.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">4</div>
-            <div class="step-body">
-              <strong>Open het programma</strong>
-              <p>Zoek het programma op in je Programma's-map of Launchpad en dubbelklik erop.</p>
-              <div class="step-note"><strong>Ziet je een melding met "Verwijderen" en "Gereed"?</strong> Dat is normaal op nieuwere Macs. Klik op <strong>Gereed</strong> (niet op Verwijderen). Ga daarna naar:<br><br>
-              <strong>Apple-logo</strong> → <strong>Systeeminstellingen</strong> → <strong>Beveiliging en privacy</strong><br>
-              Scroll naar beneden. Daar staat: <em>"Mentordashboard is geblokkeerd om je te beschermen"</em><br>
-              Klik op <strong>Open toch</strong>.<br><br>
-              Daarna hoef je dit nooit meer te doen.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">5</div>
-            <div class="step-body">
-              <strong>Klaar!</strong>
-              <p>Het programma start op met een korte rondleiding. Volg de stappen om je eerste klas aan te maken.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="install-block">
-        <div class="install-platform-header">
-          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#009FE3" aria-hidden="true"><path d="M3 12V6.75l6-1.32v6.57H3zm17 0V5.16l-9 1.65V12h9zM3 13h6v6.57l-6-1.32V13zm17 0h-9v5.19l9 1.65V13z"/></svg>
-          <h3>Installeren op Windows</h3>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num" aria-hidden="true">1</div>
-            <div class="step-body">
-              <strong>Download het bestand hierboven</strong>
-              <p>Klik op de blauwe knop onder "Windows". Je downloadt een bestand dat eindigt op <em>.exe</em>.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">2</div>
-            <div class="step-body">
-              <strong>Open het gedownloade bestand</strong>
-              <p>Ga naar je <em>Downloads</em>-map en dubbelklik op het gedownloade bestand.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">3</div>
-            <div class="step-body">
-              <strong>Geef toestemming als Windows dat vraagt</strong>
-              <p>Windows toont soms een blauw scherm met een waarschuwing. Dat is normaal bij programma's van buiten de Microsoft Store.</p>
-              <div class="step-note">Klik op <strong>Meer informatie</strong> en daarna op <strong>Toch uitvoeren</strong>. Het programma is veilig.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">4</div>
-            <div class="step-body">
-              <strong>Volg de installatie</strong>
-              <p>Klik op <em>Volgende</em> en daarna op <em>Installeren</em>. Het programma wordt automatisch geïnstalleerd.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" aria-hidden="true">5</div>
-            <div class="step-body">
-              <strong>Klaar!</strong>
-              <p>Je vindt het programma in het Startmenu onder <em>Mentordashboard CIOS</em>. Bij de eerste start zie je een korte rondleiding.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- diagonaal vlak naar doet/niet -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#F4F6F8;">
-    <polygon points="1440,0 1440,52 0,52" fill="#0D0D0D"/>
-  </svg>
-</span>
-
-<!-- WAT DOET HET -->
-<section class="does" id="wat-doet-het">
-  <div class="container">
-    <p class="section-label">Wel en niet</p>
-    <h2 class="section-title">Wat kun je ermee,<br>en wat niet?</h2>
-    <p class="section-sub">Zo weet je precies wat je kunt verwachten voordat je het installeert.</p>
-    <div class="does-grid">
-      <div class="does-box yes">
-        <h3>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          Dit kan het programma
-        </h3>
-        <ul class="does-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>PDF-rapporten importeren vanuit Cumlaude</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>In één oogopslag zien welke leerlingen aandacht nodig hebben</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Doorstroomprognose berekenen per leerling (BJ1 en BJ2)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Niet-ingeleverde en te laat ingeleverde opdrachten tonen</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Keuzedelen en rekenen/Nederlands bijhouden</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Meerdere klassen beheren</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Een back-up maken en herstellen</li>
+    <div class="wel-niet">
+      <div class="wel-niet-blok wel">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Dit kan het programma</h3>
+        <ul>
+          <li>PDF-rapporten importeren vanuit Cumlaude</li>
+          <li>In één oogopslag zien welke leerlingen aandacht nodig hebben</li>
+          <li>Doorstroomprognose berekenen per leerling (BJ1 en BJ2)</li>
+          <li>Niet-ingeleverde en te laat ingeleverde opdrachten tonen</li>
+          <li>Keuzedelen en rekenen/Nederlands bijhouden</li>
+          <li>Meerdere klassen beheren</li>
+          <li>Een back-up maken en herstellen</li>
         </ul>
       </div>
-      <div class="does-box no">
-        <h3>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Dit kan het niet
-        </h3>
-        <ul class="does-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Rechtstreeks koppelen met Cumlaude (de PDF-import is handmatig)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Gegevens synchroniseren met een collega — elk apparaat heeft zijn eigen data</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Aanwezigheid registreren of roosters beheren</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Leerlinggegevens automatisch ophalen — je importeert zelf de PDF</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Werken op een telefoon of tablet — alleen Mac en Windows</li>
+      <div class="wel-niet-blok niet">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>Dit kan het niet</h3>
+        <ul>
+          <li>Rechtstreeks koppelen met Cumlaude (de PDF-import is handmatig)</li>
+          <li>Gegevens synchroniseren met een collega; elk apparaat heeft zijn eigen gegevens</li>
+          <li>Aanwezigheid registreren of roosters beheren</li>
+          <li>Leerlinggegevens automatisch ophalen; je importeert zelf de PDF</li>
+          <li>Werken op een telefoon of tablet; alleen Mac en Windows</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- diagonaal vlak naar updates -->
-<span class="divider-down" aria-hidden="true">
-  <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style="height:52px;display:block;background:#fff;">
-    <polygon points="0,0 1440,0 1440,52 0,0" fill="#F4F6F8"/>
-  </svg>
-</span>
-
-<!-- UPDATES -->
-<section class="updates" id="updates">
+<section id="updates" aria-labelledby="updates-kop">
   <div class="container">
-    <p class="section-label">Versiegeschiedenis</p>
-    <h2 class="section-title">Wat is er nieuw?</h2>
-    <p class="section-sub">Het programma wordt regelmatig verbeterd. Hieronder zie je de laatste wijzigingen.</p>
+    <div class="sectie-kop">
+      <h2 id="updates-kop">Wat is er nieuw?</h2>
+      <p>Het programma wordt regelmatig verbeterd. Updates krijg je automatisch in het programma zelf.</p>
+    </div>
     <div class="updates-list">
       <div class="update-card">
         <div class="update-head">
@@ -712,20 +592,18 @@
       </div>
     </div>
     <div class="more-releases">
-      <a class="btn btn-ghost" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" rel="noopener" style="font-size:0.88rem;">Alle versies bekijken</a>
+      <a class="btn btn-secundair" href="https://github.com/Unframed7175/mentordashboard-cios/releases" target="_blank" rel="noopener">Alle versies bekijken</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+</main>
+
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland">
-    </div>
-    <div class="footer-divider" aria-hidden="true"></div>
-    <p><strong>Mentordashboard CIOS</strong> — intern hulpmiddel voor CIOS mentoren</p>
-    <p>Vragen of problemen? Stuur een e-mail naar <a href="mailto:rafaelalvarez1010@gmail.com">rafaelalvarez1010@gmail.com</a></p>
+  <div class="container">
+    <img src="logo-cios.png" alt="CIOS Zuidwest-Nederland" width="120" height="36">
+    <p><strong>Mentordashboard CIOS</strong>, intern hulpmiddel voor CIOS-mentoren</p>
+    <p>Vragen of problemen? Mail naar <a href="mailto:ralvarezstam@cioszuidwest.nl">ralvarezstam@cioszuidwest.nl</a></p>
     <p class="footer-legal">
       CIOS Zuidwest-Nederland is een samenwerkingscollege van Scalda en ROC Da Vinci College<br>
       Versie 2.11.4 &nbsp;·&nbsp; Gegevens worden nooit gedeeld &nbsp;·&nbsp; Geen account nodig
@@ -733,5 +611,72 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var root = document.documentElement;
+  var knoppen = Array.prototype.slice.call(document.querySelectorAll('.os-knop'));
+  var geldig = ['windows', 'mac-apple', 'mac-intel'];
+
+  function kies(os, opties) {
+    opties = opties || {};
+    if (geldig.indexOf(os) === -1) return;
+    root.classList.remove('geen-keuze');
+    knoppen.forEach(function (k) { k.setAttribute('aria-pressed', String(k.dataset.os === os)); });
+    document.querySelectorAll('.os-paneel').forEach(function (p) { p.classList.toggle('actief', p.dataset.osPanel === os); });
+    if (opties.hash) { history.replaceState(null, '', '#installatie-' + os); }
+    if (opties.focus) { document.getElementById('paneel-' + os).focus({ preventScroll: false }); }
+  }
+
+  knoppen.forEach(function (knop, i) {
+    knop.addEventListener('click', function () { kies(knop.dataset.os, { hash: true }); });
+    knop.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      var stap = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+      var volgende = knoppen[(i + stap + knoppen.length) % knoppen.length];
+      volgende.focus();
+      kies(volgende.dataset.os, { hash: true });
+    });
+  });
+
+  // Herstelacties gebruiken de canonieke downloadknop van het paneel (contract: precies 3 release-links).
+  document.querySelectorAll('[data-download-retry]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var link = document.querySelector('[data-download="' + b.dataset.downloadRetry + '"]');
+      if (link) link.click();
+    });
+  });
+  document.querySelectorAll('[data-switch-os]').forEach(function (b) {
+    b.addEventListener('click', function () { kies(b.dataset.switchOs, { hash: true, focus: true }); });
+  });
+
+  function kopieer(tekst, status) {
+    var klaar = function () { if (status) status.textContent = 'Gekopieerd'; };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(tekst).then(klaar, function () { if (status) status.textContent = 'Kopiëren lukte niet. Selecteer de tekst en kopieer hem zelf.'; });
+    } else if (status) {
+      status.textContent = 'Kopiëren lukte niet. Selecteer de tekst en kopieer hem zelf.';
+    }
+  }
+  document.querySelectorAll('[data-kopieer]').forEach(function (b) {
+    b.addEventListener('click', function () { kopieer(b.dataset.kopieer, b.closest('.tak-inhoud').querySelector('.gekopieerd')); });
+  });
+  var linkKnop = document.getElementById('kopieer-link');
+  if (linkKnop) {
+    linkKnop.addEventListener('click', function () { kopieer('https://unframed7175.github.io/ciosmentorendashboard/#installatie', document.getElementById('link-status')); });
+  }
+
+  // Startkeuze: deep-link > Windows-detectie > geen keuze (Mac-chip niet betrouwbaar te detecteren).
+  var hash = location.hash.replace('#installatie-', '');
+  if (geldig.indexOf(hash) !== -1) {
+    kies(hash);
+    document.getElementById('installatie').scrollIntoView();
+  } else if (/Windows/i.test(navigator.userAgent)) {
+    kies('windows');
+  } else {
+    root.classList.add('geen-keuze');
+  }
+})();
+</script>
 </body>
 </html>
